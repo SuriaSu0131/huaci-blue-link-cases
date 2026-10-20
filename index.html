@@ -1,0 +1,1827 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>划词搜索 · 改前与改后</title>
+<style>
+:root{--bg:#f6f7fa;--paper:#fff;--ink:#202b3d;--muted:#69758a;--line:#e3e7ef;--blue:#2464df;--blue-bg:#eef4ff;--radius:14px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}button,input{font:inherit}button{cursor:pointer}button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #8bb3ff;outline-offset:4px}button{touch-action:manipulation}[hidden]{display:none!important}
+.masthead{background:var(--paper);border-bottom:1px solid var(--line);padding:30px 38px 25px}.masthead-inner{max-width:1540px;margin:auto;display:flex;justify-content:space-between;gap:32px;align-items:center}.eyebrow{font-size:11px;letter-spacing:2.2px;font-weight:700;color:var(--muted);margin:0 0 10px}.masthead h1{font-size:29px;line-height:1.4;letter-spacing:-.5px;margin:0;font-weight:700}.masthead .subtitle{color:var(--muted);margin:10px 0 0;font-size:14px}.principle{font-size:14px;line-height:1.9;padding-left:22px;border-left:2px solid #cad9f6;white-space:nowrap}.principle strong{display:block;font-size:16px;font-weight:600;color:#28446b}.layout{max-width:1616px;margin:auto;padding:28px 38px 60px;display:grid;grid-template-columns:238px minmax(0,1fr);gap:30px;align-items:start}
+.sidebar{position:sticky;top:22px}.sidebar-label{padding:0 10px 13px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between}.nav-list{display:flex;flex-direction:column;gap:5px}.case-nav{display:grid;grid-template-columns:23px minmax(0,1fr);gap:0 10px;width:100%;text-align:left;border:1px solid transparent;border-radius:10px;background:transparent;padding:11px 10px;color:#5f6c80;transition:background .15s,border-color .15s}.case-nav:hover{background:#edf0f5}.case-nav.active{background:var(--blue-bg);border-color:#d9e5fb;color:#2357a4}.nav-num{font-size:11px;line-height:23px;font-variant-numeric:tabular-nums;grid-row:1/3;opacity:.7}.nav-query{font-size:13px;line-height:1.7;font-weight:500}.nav-count{font-size:11px;color:#8793a5;line-height:1.8;margin-top:3px}.active .nav-count{color:#688bbf}.sidebar-note{font-size:11px;line-height:1.9;color:#8b95a5;border-top:1px solid var(--line);padding:16px 10px;margin:17px 0 0}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:0 0 24px}.display-toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer}.display-toggle input{accent-color:var(--blue);width:15px;height:15px;margin:0}.navigation{display:flex;align-items:center;gap:9px}.progress{font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted);margin-right:7px}.arrow{width:32px;height:32px;border:1px solid #dce2ec;border-radius:8px;background:white;font-size:17px;color:#4a5d7b}.arrow:disabled{opacity:.35;cursor:default}.arrow:not(:disabled):hover{border-color:#a3b9df;background:var(--blue-bg)}
+.case-intro{margin-bottom:22px}.case-number{display:block;font-size:11px;letter-spacing:1.6px;color:#7e91ad;margin-bottom:9px;font-weight:600}.case-intro h2{font-size:25px;line-height:1.45;margin:0 0 9px;letter-spacing:-.4px}.case-intro p{font-size:14px;color:var(--muted);line-height:1.8;margin:0;max-width:820px}.comparison{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:stretch}.answer-panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);min-width:0;overflow:hidden}.after{border-color:#cedcf4}.panel-head{padding:17px 23px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;line-height:1.4;background:#fcfcfd}.after .panel-head{background:#f6f9ff;border-bottom-color:#dfe7f5}.count{font-size:11px;font-weight:400;color:#8190a5}.dot{width:6px;height:6px;display:inline-block;border-radius:50%;margin-right:9px;vertical-align:2px}.dot.old{background:#9faaba}.dot.new{background:#5b86d9}.answer{padding:23px 25px 29px;font-size:15px;line-height:1.95;overflow-wrap:anywhere}.answer>:first-child{margin-top:0}.answer>:last-child{margin-bottom:0}.answer p{margin:0 0 16px}.answer h1,.answer h2,.answer h3,.answer h4{font-size:15px;line-height:1.65;margin:25px 0 10px;font-weight:650;color:#293a52}.answer ul,.answer ol{padding-left:21px;margin:10px 0 18px}.answer li{padding-left:3px;margin:6px 0}.answer strong{font-weight:650}.answer table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.85;margin:12px 0 20px}.answer th,.answer td{padding:9px 10px;border-bottom:1px solid #e8ecf2;text-align:left;vertical-align:top}.answer th{font-weight:600;background:#f6f8fb;color:#536681}.answer th:first-child{min-width:37%}.answer td:first-child{width:43%}.answer code{font-family:inherit}
+.term{display:inline;border:0;padding:0;background:none;color:var(--blue);text-decoration:underline;text-decoration-color:#9ab9f5;text-decoration-thickness:1px;text-underline-offset:3px;font-size:inherit;font-weight:inherit;line-height:inherit;text-align:inherit;border-radius:2px;white-space:normal;vertical-align:baseline}.term:hover{color:#164cb6;background:#eef4ff;text-decoration-color:#2464df}.term.selected{background:#e3edff;color:#174ebc}.hide-terms .term{color:inherit;text-decoration:none}.hide-terms .term:hover{background:none}.changes{margin:25px 0;padding:22px 25px;background:#f0f3f8;border-radius:12px}.changes h3{font-size:14px;margin:0 0 12px;font-weight:650;color:#3e526f}.changes ul{margin:0;padding-left:18px;color:#65748b;font-size:13px;line-height:1.9}.changes li{margin:5px 0;padding-left:2px}.planning{background:white;border:1px solid var(--line);border-radius:11px;overflow:hidden}.planning summary{padding:16px 21px;cursor:pointer;font-size:13px;font-weight:500;color:#425873}.planning summary span{float:right;color:#8a97aa;font-size:11px}.planning-body{padding:2px 21px 19px;overflow-x:auto}.planning table{width:100%;border-collapse:collapse;font-size:12px;line-height:1.9}.planning th,.planning td{padding:10px 13px;border-bottom:1px solid #e8edf4;text-align:left;vertical-align:top}.planning th{background:#f7f9fc;color:#536984;font-weight:500}.planning td:first-child{width:20%;color:#3c536f}.planning td:nth-child(2){width:30%;color:#4266a0}.planning p{font-size:13px;color:var(--muted)}.source{font-size:11px;color:#8c98aa;margin:19px 4px}.source summary{cursor:pointer}.source p{margin:9px 0;line-height:1.7}.footnote{border-top:1px solid var(--line);padding-top:20px;margin:27px 0 0;color:#8b95a5;font-size:11px;line-height:1.9}
+.search-dialog{width:min(420px,calc(100vw - 34px));padding:0;border:1px solid #dce4f2;border-radius:15px;box-shadow:0 18px 70px #182d5529;background:white;color:var(--ink)}.search-dialog::backdrop{background:#20334b30;backdrop-filter:blur(2px)}.dialog-head{display:flex;justify-content:space-between;align-items:center;padding:19px 22px 12px}.dialog-head span{font-size:11px;letter-spacing:.5px;color:#7c8ca2}.close{border:0;background:none;font-size:23px;color:#7c8ca2;padding:0 4px;line-height:1}.dialog-word{font-size:19px;margin:0 22px 21px;line-height:1.6;font-weight:600;overflow-wrap:anywhere}.search-label{font-size:12px;color:#8190a7;margin:0 22px 9px}.search-query{font-size:16px;color:#245aa6;background:#f1f6ff;border:1px solid #e0eafa;border-radius:9px;margin:0 22px 17px;padding:13px 15px;line-height:1.8;overflow-wrap:anywhere}.dialog-footer{font-size:11px;color:#96a0b0;margin:0 22px 22px;line-height:1.8}.copy{font-size:12px;padding:9px 13px;background:#edf3ff;color:#275db2;border:1px solid #d8e5fd;border-radius:7px;margin:0 22px 15px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 19px;border-radius:9px;background:#253955;color:white;font-size:12px;z-index:8;box-shadow:0 5px 20px #22375122}
+@media(min-width:1600px){.answer{font-size:16px;padding:27px 30px}}
+@media(max-width:1150px){.layout{grid-template-columns:196px minmax(0,1fr);padding:24px;gap:22px}.masthead{padding:25px 24px}.answer{padding:19px;font-size:14px}.panel-head{padding:15px 19px}.comparison{gap:13px}.case-intro h2{font-size:23px}}
+@media(max-width:850px){.masthead h1{font-size:24px}.principle{display:none}.layout{display:block;padding:20px}.sidebar{position:static;margin-bottom:24px}.sidebar-label{padding-left:0;padding-right:0}.nav-list{display:flex;flex-direction:row;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}.case-nav{min-width:176px;max-width:176px;padding:10px;scroll-snap-align:start;background:#f0f2f6}.nav-query{font-size:12px}.sidebar-note{display:none}.case-intro h2{font-size:22px}.answer{font-size:14px}}
+@media(max-width:620px){.masthead{padding:25px 20px}.masthead h1{font-size:22px}.masthead .subtitle{font-size:12px;line-height:1.8}.comparison{grid-template-columns:1fr;gap:17px}.answer{font-size:15px;padding:22px}.toolbar{margin-bottom:20px}.changes{padding:18px}.planning-body{padding:0 10px 14px}.planning td,.planning th{padding:9px 8px}.source{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.sidebar,.toolbar,.source,.search-dialog,.footnote{display:none!important}.masthead{padding:0 0 20px}.layout{display:block;padding:20px 0}.case{display:block!important;break-before:page}.case:first-child{break-before:auto}.comparison{grid-template-columns:1fr 1fr}.answer{font-size:10px;line-height:1.6;padding:12px}.case-intro h2{font-size:19px}.changes{break-inside:avoid;padding:12px}.planning{display:none}.answer-panel{overflow:visible}.term{color:#2464df!important}}
+</style>
+</head>
+<body>
+<header class="masthead"><div class="masthead-inner"><div><p class="eyebrow">划词搜索 · 30 个案例</p><h1>改前与改后</h1><p class="subtitle">左右对照阅读，点击蓝色词语查看对应搜索词。</p></div><div class="principle"><strong>文案结构化</strong><strong>划词规划化</strong></div></div></header>
+<div class="layout">
+  <aside class="sidebar" aria-label="案例目录"><div class="sidebar-label"><span>案例目录</span><span>30 CASES</span></div><nav class="nav-list"><button class="case-nav active" type="button" data-case="01" aria-controls="case-01" aria-current="true"><span class="nav-num">01</span><span class="nav-query">台风为什么要登陆</span><span class="nav-count">7 → 3</span></button>
+<button class="case-nav" type="button" data-case="02" aria-controls="case-02" aria-current="false"><span class="nav-num">02</span><span class="nav-query">临沂特产</span><span class="nav-count">17 → 6</span></button>
+<button class="case-nav" type="button" data-case="03" aria-controls="case-03" aria-current="false"><span class="nav-num">03</span><span class="nav-query">赤峰宁城县十大旅游景点</span><span class="nav-count">10 → 10</span></button>
+<button class="case-nav" type="button" data-case="04" aria-controls="case-04" aria-current="false"><span class="nav-num">04</span><span class="nav-query">田亮个人简历</span><span class="nav-count">12 → 4</span></button>
+<button class="case-nav" type="button" data-case="05" aria-controls="case-05" aria-current="false"><span class="nav-num">05</span><span class="nav-query">反水是什么意思</span><span class="nav-count">4 → 2</span></button>
+<button class="case-nav" type="button" data-case="06" aria-controls="case-06" aria-current="false"><span class="nav-num">06</span><span class="nav-query">跏怎么读</span><span class="nav-count">5 → 1</span></button>
+<button class="case-nav" type="button" data-case="07" aria-controls="case-07" aria-current="false"><span class="nav-num">07</span><span class="nav-query">前人之述备矣的备是什么意思</span><span class="nav-count">2 → 1</span></button>
+<button class="case-nav" type="button" data-case="08" aria-controls="case-08" aria-current="false"><span class="nav-num">08</span><span class="nav-query">壁虎属于什么类动物</span><span class="nav-count">5 → 1</span></button>
+<button class="case-nav" type="button" data-case="09" aria-controls="case-09" aria-current="false"><span class="nav-num">09</span><span class="nav-query">千岛湖在哪个地方</span><span class="nav-count">1 → 1</span></button>
+<button class="case-nav" type="button" data-case="10" aria-controls="case-10" aria-current="false"><span class="nav-num">10</span><span class="nav-query">61公斤等于多少斤</span><span class="nav-count">0 → 0</span></button><button class="case-nav" type="button" data-case="11" aria-controls="case-11" aria-current="false"><span class="nav-num">11</span><span class="nav-query">夜语记电视剧一共多少集</span><span class="nav-count">0 → 0</span></button>
+
+<button class="case-nav" type="button" data-case="12" aria-controls="case-12" aria-current="false"><span class="nav-num">12</span><span class="nav-query">《七条铃香》动漫名称</span><span class="nav-count">4 → 2</span></button>
+
+<button class="case-nav" type="button" data-case="13" aria-controls="case-13" aria-current="false"><span class="nav-num">13</span><span class="nav-query">大头针歌手长什么样子</span><span class="nav-count">3 → 3</span></button>
+
+<button class="case-nav" type="button" data-case="14" aria-controls="case-14" aria-current="false"><span class="nav-num">14</span><span class="nav-query">宋小梅报答养父大结局</span><span class="nav-count">2 → 2</span></button>
+
+<button class="case-nav" type="button" data-case="15" aria-controls="case-15" aria-current="false"><span class="nav-num">15</span><span class="nav-query">赵露思什么学历</span><span class="nav-count">0 → 1</span></button>
+
+<button class="case-nav" type="button" data-case="16" aria-controls="case-16" aria-current="false"><span class="nav-num">16</span><span class="nav-query">大唐芙蓉园要门票吗</span><span class="nav-count">3 → 3</span></button>
+
+<button class="case-nav" type="button" data-case="17" aria-controls="case-17" aria-current="false"><span class="nav-num">17</span><span class="nav-query">长沙银行信用卡电话</span><span class="nav-count">0 → 0</span></button>
+
+<button class="case-nav" type="button" data-case="18" aria-controls="case-18" aria-current="false"><span class="nav-num">18</span><span class="nav-query">重庆铜梁龙迎来强力中卫新援</span><span class="nav-count">7 → 2</span></button>
+
+<button class="case-nav" type="button" data-case="19" aria-controls="case-19" aria-current="false"><span class="nav-num">19</span><span class="nav-query">火车票预售期是多少天</span><span class="nav-count">1 → 0</span></button>
+
+<button class="case-nav" type="button" data-case="20" aria-controls="case-20" aria-current="false"><span class="nav-num">20</span><span class="nav-query">立秋过后是不是秋天了</span><span class="nav-count">6 → 1</span></button>
+
+<button class="case-nav" type="button" data-case="21" aria-controls="case-21" aria-current="false"><span class="nav-num">21</span><span class="nav-query">老子是哪里的人</span><span class="nav-count">6 → 2</span></button>
+
+<button class="case-nav" type="button" data-case="22" aria-controls="case-22" aria-current="false"><span class="nav-num">22</span><span class="nav-query">骇人听闻</span><span class="nav-count">3 → 1</span></button>
+
+<button class="case-nav" type="button" data-case="23" aria-controls="case-23" aria-current="false"><span class="nav-num">23</span><span class="nav-query">从丽江到香格里拉怎么去方便</span><span class="nav-count">6 → 5</span></button>
+
+<button class="case-nav" type="button" data-case="24" aria-controls="case-24" aria-current="false"><span class="nav-num">24</span><span class="nav-query">口允念什么</span><span class="nav-count">1 → 1</span></button>
+
+<button class="case-nav" type="button" data-case="25" aria-controls="case-25" aria-current="false"><span class="nav-num">25</span><span class="nav-query">中国刑事警察学院</span><span class="nav-count">9 → 3</span></button>
+
+<button class="case-nav" type="button" data-case="26" aria-controls="case-26" aria-current="false"><span class="nav-num">26</span><span class="nav-query">海参蒸着吃的正确做法</span><span class="nav-count">2 → 1</span></button>
+
+<button class="case-nav" type="button" data-case="27" aria-controls="case-27" aria-current="false"><span class="nav-num">27</span><span class="nav-query">今年是早秋还是晚秋?</span><span class="nav-count">9 → 1</span></button>
+
+<button class="case-nav" type="button" data-case="28" aria-controls="case-28" aria-current="false"><span class="nav-num">28</span><span class="nav-query">腾势n8l闪充版</span><span class="nav-count">6 → 3</span></button>
+
+<button class="case-nav" type="button" data-case="29" aria-controls="case-29" aria-current="false"><span class="nav-num">29</span><span class="nav-query">一寸土一年木</span><span class="nav-count">3 → 3</span></button>
+
+<button class="case-nav" type="button" data-case="30" aria-controls="case-30" aria-current="false"><span class="nav-num">30</span><span class="nav-query">牛肉为什么忌醋呢</span><span class="nav-count">1 → 0</span></button>
+</nav><p class="sidebar-note">目录数字为划词数量变化。<br>数量只辅助比较，不代表质量得分。</p></aside>
+  <main id="main"><div class="toolbar"><label class="display-toggle"><input id="showTerms" type="checkbox" checked>显示划词</label><div class="navigation"><span class="progress" id="progress" aria-live="polite">01 / 30</span><button class="arrow" id="prev" type="button" aria-label="上一个案例" disabled>←</button><button class="arrow" id="next" type="button" aria-label="下一个案例">→</button></div></div><section class="case active" id="case-01" aria-labelledby="title-01">
+  <div class="case-intro"><span class="case-number">CASE 01</span><h2 id="title-01">台风为什么要登陆</h2><p>围绕核心原因组织解释，把最关键的概念放到合适位置</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">7 个划词</span></header><div class="answer"><p>台风登陆并非主动行为，而是被<button class="term" type="button" data-search="大气环流" data-side="改前" aria-label="大气环流，查看搜索词" title="搜索：大气环流">大气环流</button>引导移动至陆地的结果。当台风中心轨迹与海岸线相交时，即发生登陆 。</p>
+<h3>副热带高压是主要&quot;指挥棒&quot;</h3>
+<ol>
+<li>副热带高压边缘的顺时针气流引导台风向西或西北方向移动，决定台风是否登陆及登陆地点 。</li>
+<li>当副高位置偏西且强度较强时，台风易沿其南侧边缘西行，接连登陆我国东南沿海 。</li>
+<li>若副高减弱或东退，台风可能转向北上，趋向朝鲜半岛或日本 。</li>
+</ol>
+<h3>其他影响因素共同作用</h3>
+<ol>
+<li><button class="term" type="button" data-search="地转偏向力" data-side="改前" aria-label="地转偏向力，查看搜索词" title="搜索：地转偏向力">地转偏向力</button>：地球自转产生的偏向力使台风在北半球呈逆时针旋转，并影响其向西北方向移动 。</li>
+<li><button class="term" type="button" data-search="季风槽" data-side="改前" aria-label="季风槽，查看搜索词" title="搜索：季风槽">季风槽</button>：热带季风区的低压轴带为台风提供水汽和引导，有时导致路径波动 。</li>
+<li><button class="term" type="button" data-search="西风带" data-side="改前" aria-label="西风带，查看搜索词" title="搜索：西风带">西风带</button>与冷空气：中纬度<button class="term" type="button" data-search="西风槽" data-side="改前" aria-label="西风槽，查看搜索词" title="搜索：西风槽">西风槽</button>可&quot;拉&quot;动台风转向东北，冷空气相遇可能改变台风结构或路径 。</li>
+<li>多台风相互作用：当多个台风距离较近时，可能发生&quot;<button class="term" type="button" data-search="藤原效应" data-side="改前" aria-label="藤原效应，查看搜索词" title="搜索：藤原效应">藤原效应</button>&quot;，互相绕转影响路径 。</li>
+</ol>
+<h3>登陆后的命运</h3>
+<p>台风登陆后水汽供应锐减，陆地摩擦加速能量消耗，通常逐渐减弱消散，但也可能转变为<button class="term" type="button" data-search="温带气旋" data-side="改前" aria-label="温带气旋，查看搜索词" title="搜索：温带气旋">温带气旋</button>或残涡维持带来持续降水 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">3 个划词</span></header><div class="answer"><p><strong>台风不是主动“要登陆”，而是被周围气流带着移动；当它的中心移动到海岸并进入陆地，就发生了登陆。</strong></p>
+<h3>最主要的影响是什么</h3>
+<p><button class="term" type="button" data-search="副热带高压 台风路径" data-side="改后" aria-label="副热带高压，查看搜索词" title="搜索：副热带高压 台风路径">副热带高压</button>是影响台风路径的重要因素。它的位置和强弱变化，会改变引导台风移动的气流：位置偏西时，台风可能沿其边缘向西移动；减弱或东退时，台风的移动方向也可能改变。</p>
+<h3>还有哪些因素</h3>
+<ul>
+<li><strong>地球自转：</strong> <button class="term" type="button" data-search="地转偏向力 台风" data-side="改后" aria-label="地转偏向力，查看搜索词" title="搜索：地转偏向力 台风">地转偏向力</button>影响台风的旋转与移动。</li>
+<li><strong>其他天气系统：</strong> 季风槽、西风带及西风槽、冷空气等也可能影响路径。</li>
+<li><strong>附近的其他台风：</strong> 多个台风靠近时，可能发生<button class="term" type="button" data-search="藤原效应 台风" data-side="改后" aria-label="藤原效应，查看搜索词" title="搜索：藤原效应 台风">藤原效应</button>，相互影响移动路径。</li>
+</ul>
+<h3>登陆后会怎样</h3>
+<p>台风登陆后，水汽供应减少，陆地摩擦增加，通常逐渐减弱；也可能转变为温带气旋或以残涡形式继续带来降水。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-01"><h3 id="changes-01">这次改了什么</h3><ul>
+<li>文案按“为什么登陆—主要因素—其他因素—登陆以后”展开，保留直接解释。</li>
+<li>原文标题里的“副热带高压”没有划出，这次把它放到核心解释中并规划为重点。</li>
+<li>保留“地转偏向力”“藤原效应”；不把“大气环流”、西风带、西风槽等所有相关词都划上，避免层层跳向旁支。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>3 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>副热带高压</td>
+<td>副热带高压 台风路径</td>
+<td>核心原因中的生词，适合继续了解它怎样影响台风。</td>
+</tr>
+<tr>
+<td>地转偏向力</td>
+<td>地转偏向力 台风</td>
+<td>抽象概念，用户可能想看图解或进一步解释。</td>
+</tr>
+<tr>
+<td>藤原效应</td>
+<td>藤原效应 台风</td>
+<td>名称陌生，适合继续看双台风相互作用的示意。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B136 · 原正文 F136 · 实体记录第 136—143 行</p></details>
+</section>
+<section class="case" id="case-02" aria-labelledby="title-02" hidden>
+  <div class="case-intro"><span class="case-number">CASE 02</span><h2 id="title-02">临沂特产</h2><p>把连续介绍改成便于挑选的清单，解释过的地方特产仍可划</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">17 个划词</span></header><div class="answer"><p>临沂特产种类特别丰富，既有能直接带走的干货和水果，也有必须现场品尝的美食，像<button class="term" type="button" data-search="蒙阴蜜桃" data-side="改前" aria-label="蒙阴蜜桃，查看搜索词" title="搜索：蒙阴蜜桃">蒙阴蜜桃</button>、<button class="term" type="button" data-search="临沂炒鸡" data-side="改前" aria-label="临沂炒鸡，查看搜索词" title="搜索：临沂炒鸡">临沂炒鸡</button>、煎饼和<button class="term" type="button" data-search="兰陵酒" data-side="改前" aria-label="兰陵酒，查看搜索词" title="搜索：兰陵酒">兰陵酒</button>都是当地响当当的名片 。</p>
+<h3>🍑 哪些能直接打包带走</h3>
+<p>蒙阴蜜桃是国家地理标志产品，果肉细腻汁多味甜，成熟期从5月持续到11月，鲜食最佳也有蜜桃汁、桃罐头等加工品方便携带 。兰陵酒产自兰陵县兰陵镇，用黍米和深井水酿造，酒色琥珀光泽，口味醇厚绵软，历史可追溯到春秋时代 。<button class="term" type="button" data-search="临沂 八宝豆豉" data-side="改前" aria-label="八宝豆豉，查看搜索词" title="搜索：临沂 八宝豆豉">八宝豆豉</button>用黑豆、茄子、鲜姜等八种原料发酵制成，醇厚清香去腻爽口，密封保存能放很久 。<button class="term" type="button" data-search="平邑金银花" data-side="改前" aria-label="平邑金银花，查看搜索词" title="搜索：平邑金银花">平邑金银花</button>和<button class="term" type="button" data-search="临沭太子参" data-side="改前" aria-label="临沭太子参，查看搜索词" title="搜索：临沭太子参">临沭太子参</button>都是当地有名的药材特产，可以泡茶或入药 。<button class="term" type="button" data-search="沂蒙煎饼" data-side="改前" aria-label="沂蒙煎饼，查看搜索词" title="搜索：沂蒙煎饼">沂蒙煎饼</button>是传统主食，薄如蝉翼易储存，现在也有真空包装的即食产品 。</p>
+<p>[原文商品组件：想买正宗煎饼可以看看这些]</p>
+<h3>🍳 到当地必须尝尝的美食</h3>
+<p>临沂炒鸡是十大名吃之首，选用当地散养草鸡配秘制酱料炒制，酱香浓郁肉质紧实，很多店提供真空包装加热即可食用 。<button class="term" type="button" data-search="临沂 糁汤" data-side="改前" aria-label="糁汤，查看搜索词" title="搜索：临沂 糁汤">糁汤</button>是临沂人早餐标配，用牛骨麦仁熬制，撒上胡椒粉香菜配油条蘸食，凌晨四点就能闻到老城街巷飘起的骨汤醇香 。<button class="term" type="button" data-search="沂蒙全蝎" data-side="改前" aria-label="沂蒙全蝎，查看搜索词" title="搜索：沂蒙全蝎">沂蒙全蝎</button>药食两用，可油炸或做蝎子滋补汤，蒙山腹地自然环境适合野生活蝎生长 。<button class="term" type="button" data-search="莒南驴肉" data-side="改前" aria-label="莒南驴肉，查看搜索词" title="搜索：莒南驴肉">莒南驴肉</button>和<button class="term" type="button" data-search="临沂 红烧兔头" data-side="改前" aria-label="红烧兔头，查看搜索词" title="搜索：临沂 红烧兔头">红烧兔头</button>也是当地传统名吃，兔头要遵循&quot;掰头取舌、食腮啃眼、掏挖脑髓&quot;的步骤品尝 。</p>
+<h3>🎁 哪些有地理标志认证更靠谱</h3>
+<p><button class="term" type="button" data-search="苍山大蒜" data-side="改前" aria-label="苍山大蒜，查看搜索词" title="搜索：苍山大蒜">苍山大蒜</button>是中国国家地理标志产品，蒜头大瓣少肉厚，生食脆辣提神 。<button class="term" type="button" data-search="八湖莲藕" data-side="改前" aria-label="八湖莲藕，查看搜索词" title="搜索：八湖莲藕">八湖莲藕</button>种植已有200余年历史，表面光滑白嫩呈半透明状，质脆细嫩无渣 。<button class="term" type="button" data-search="沂水大樱桃" data-side="改前" aria-label="沂水大樱桃，查看搜索词" title="搜索：沂水大樱桃">沂水大樱桃</button>果个大色泽鲜艳，含糖量高汁多味好 。<button class="term" type="button" data-search="蒙山蜂蜜" data-side="改前" aria-label="蒙山蜂蜜，查看搜索词" title="搜索：蒙山蜂蜜">蒙山蜂蜜</button>呈金黄或淡金黄色，稠如凝脂味甜纯正 。<button class="term" type="button" data-search="临沭花生" data-side="改前" aria-label="临沭花生，查看搜索词" title="搜索：临沭花生">临沭花生</button>荚果网纹清晰，籽仁大而饱满，质地香脆有甜味 。<button class="term" type="button" data-search="胡阳西红柿" data-side="改前" aria-label="胡阳西红柿，查看搜索词" title="搜索：胡阳西红柿">胡阳西红柿</button>果型圆整粉红透亮，甜酸适口生食清香 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">6 个划词</span></header><div class="answer"><p><strong>临沂特产可以先按“带走”和“到当地吃”来选。</strong></p>
+<h3>想买伴手礼，可以先看这些</h3>
+<table>
+<thead>
+<tr>
+<th>特产</th>
+<th>主要特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button class="term" type="button" data-search="临沂 沂蒙煎饼" data-side="改后" aria-label="沂蒙煎饼，查看搜索词" title="搜索：临沂 沂蒙煎饼">沂蒙煎饼</button></td>
+<td>传统主食，也有方便携带的包装产品。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="临沂 八宝豆豉" data-side="改后" aria-label="八宝豆豉，查看搜索词" title="搜索：临沂 八宝豆豉">八宝豆豉</button></td>
+<td>发酵制成，口味醇厚，适合搭配饭菜。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="兰陵酒" data-side="改后" aria-label="兰陵酒，查看搜索词" title="搜索：兰陵酒">兰陵酒</button></td>
+<td>兰陵当地的酒类特产。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="蒙阴蜜桃" data-side="改后" aria-label="蒙阴蜜桃，查看搜索词" title="搜索：蒙阴蜜桃">蒙阴蜜桃</button></td>
+<td>鲜果类特产，也有果汁、罐头等加工品。</td>
+</tr>
+</tbody></table>
+<h3>到当地，可以了解这些吃食</h3>
+<ul>
+<li><strong><button class="term" type="button" data-search="临沂炒鸡" data-side="改后" aria-label="临沂炒鸡，查看搜索词" title="搜索：临沂炒鸡">临沂炒鸡</button>：</strong> 当地菜肴，特点是酱香浓郁。</li>
+<li><strong><button class="term" type="button" data-search="临沂 糁汤" data-side="改后" aria-label="糁汤，查看搜索词" title="搜索：临沂 糁汤">糁汤</button>：</strong> 当地常见早餐，可以搭配油条。</li>
+<li><strong>其他风味：</strong> 莒南驴肉、红烧兔头、沂蒙全蝎等。</li>
+</ul>
+<h3>还有哪些地方特产</h3>
+<p>果蔬和农产品还包括苍山大蒜、八湖莲藕、沂水大樱桃、蒙山蜂蜜、临沭花生、胡阳西红柿；药材特产还有平邑金银花、临沭太子参等。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-02"><h3 id="changes-02">这次改了什么</h3><ul>
+<li>原文已经有分组，但每组里多个对象连成大段；改后用“一项一个特点”的形式，方便挑选。</li>
+<li>这六个词按代表性优先保留。其余特产仍保留在文案中，作为次要选择，不全部划出。</li>
+<li>原表曾将“沂蒙煎饼”“八宝豆豉”等记为“文中有解释”。新标准下，简短介绍之后仍可能想看图片或更多内容，可以继续划。</li>
+<li>去掉原文的药食功效、认证可靠性和“必须尝”等扩展表述，避免与本次选特产的主线混在一起。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>6 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>沂蒙煎饼</td>
+<td>临沂 沂蒙煎饼</td>
+<td>想看实物、种类和当地吃法。</td>
+</tr>
+<tr>
+<td>八宝豆豉</td>
+<td>临沂 八宝豆豉</td>
+<td>对名称或做法不熟悉，想继续了解。</td>
+</tr>
+<tr>
+<td>兰陵酒</td>
+<td>兰陵酒</td>
+<td>想了解具体产品及当地背景。</td>
+</tr>
+<tr>
+<td>蒙阴蜜桃</td>
+<td>蒙阴蜜桃</td>
+<td>想了解这类地方水果。</td>
+</tr>
+<tr>
+<td>临沂炒鸡</td>
+<td>临沂炒鸡</td>
+<td>想看菜品、做法或相关介绍。</td>
+</tr>
+<tr>
+<td>糁汤</td>
+<td>临沂 糁汤</td>
+<td>名称较陌生，补充地域便于搜准。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B295 · 原正文 F295 · 实体记录第 295—311 行</p></details>
+</section>
+<section class="case" id="case-03" aria-labelledby="title-03" hidden>
+  <div class="case-intro"><span class="case-number">CASE 03</span><h2 id="title-03">赤峰宁城县十大旅游景点</h2><p>划词数量保持不变，把点击位置与清单项目对齐</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">10 个划词</span></header><div class="answer"><p>宁城县热门景点丰富，<button class="term" type="button" data-search="宁城县 紫蒙湖" data-side="改前" aria-label="紫蒙湖，查看搜索词" title="搜索：宁城县 紫蒙湖">紫蒙湖</button>、<button class="term" type="button" data-search="宁城县 道须沟" data-side="改前" aria-label="道须沟，查看搜索词" title="搜索：宁城县 道须沟">道须沟</button>、<button class="term" type="button" data-search="宁城县 辽中京遗址" data-side="改前" aria-label="辽中京遗址，查看搜索词" title="搜索：宁城县 辽中京遗址">辽中京遗址</button>等十大必去地涵盖自然与人文，适合各类游客 。</p>
+<h3>哪里风景最宜人</h3>
+<ol>
+<li>紫蒙湖风景区
+ 湖大景美能划船，吃鱼休闲好去处。</li>
+<li>道须沟生态旅游区
+ 森林氧吧瀑布多，徒步拍照很出片。</li>
+<li><button class="term" type="button" data-search="宁城县 杜鹃山景区" data-side="改前" aria-label="杜鹃山景区，查看搜索词" title="搜索：宁城县 杜鹃山景区">杜鹃山景区</button>
+ 春天花海漫山红，登山观景视野好。</li>
+<li><button class="term" type="button" data-search="宁城县 藏龙谷自然风景区" data-side="改前" aria-label="藏龙谷自然风景区，查看搜索词" title="搜索：宁城县 藏龙谷自然风景区">藏龙谷自然风景区</button>
+ 怪石嶙峋像龙鳞，峡谷探险有意思。</li>
+</ol>
+<h3>哪些历史值得看</h3>
+<ol>
+<li>辽中京遗址
+ 辽代古城墙还在，大明塔雄伟壮观。</li>
+<li><button class="term" type="button" data-search="宁城县 法轮寺" data-side="改前" aria-label="法轮寺，查看搜索词" title="搜索：宁城县 法轮寺">法轮寺</button>
+ 清代黄教寺庙，建筑精美底蕴深。</li>
+<li><button class="term" type="button" data-search="宁城县 黑城城址" data-side="改前" aria-label="黑城城址，查看搜索词" title="搜索：宁城县 黑城城址">黑城城址</button>
+ 战国汉代古城，文物丰富价值高。</li>
+</ol>
+<h3>去哪放松泡温泉</h3>
+<ol>
+<li><button class="term" type="button" data-search="宁城县 热水温泉旅游度假区" data-side="改前" aria-label="热水温泉旅游度假区，查看搜索词" title="搜索：宁城县 热水温泉旅游度假区">热水温泉旅游度假区</button>
+ 天然温泉能治病，泡汤住宿都方便。</li>
+<li><button class="term" type="button" data-search="宁城县 葫芦峪风景区" data-side="改前" aria-label="葫芦峪风景区，查看搜索词" title="搜索：宁城县 葫芦峪风景区">葫芦峪风景区</button>
+ 深山老林空气好，形状像葫芦。</li>
+<li><button class="term" type="button" data-search="宁城县 福峰山" data-side="改前" aria-label="福峰山，查看搜索词" title="搜索：宁城县 福峰山">福峰山</button>
+ 山峰奇特景色美，俗称喇嘛洞山。</li>
+</ol>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">10 个划词</span></header><div class="answer"><p><strong>宁城县的景点可以按自然风景、历史人文和温泉休闲来挑选。</strong> 下面按看点整理十个地点。</p>
+<h3>自然风景</h3>
+<table>
+<thead>
+<tr>
+<th>地点</th>
+<th>可以关注的看点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button class="term" type="button" data-search="宁城县 紫蒙湖" data-side="改后" aria-label="紫蒙湖风景区，查看搜索词" title="搜索：宁城县 紫蒙湖">紫蒙湖风景区</button></td>
+<td>湖景、休闲游览。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 道须沟" data-side="改后" aria-label="道须沟生态旅游区，查看搜索词" title="搜索：宁城县 道须沟">道须沟生态旅游区</button></td>
+<td>森林、瀑布、徒步。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 杜鹃山景区" data-side="改后" aria-label="杜鹃山景区，查看搜索词" title="搜索：宁城县 杜鹃山景区">杜鹃山景区</button></td>
+<td>赏花、登山观景。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 藏龙谷自然风景区" data-side="改后" aria-label="藏龙谷自然风景区，查看搜索词" title="搜索：宁城县 藏龙谷自然风景区">藏龙谷自然风景区</button></td>
+<td>峡谷、奇石景观。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 葫芦峪风景区" data-side="改后" aria-label="葫芦峪风景区，查看搜索词" title="搜索：宁城县 葫芦峪风景区">葫芦峪风景区</button></td>
+<td>山林风景。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 福峰山" data-side="改后" aria-label="福峰山，查看搜索词" title="搜索：宁城县 福峰山">福峰山</button></td>
+<td>山峰景观，也称喇嘛洞山。</td>
+</tr>
+</tbody></table>
+<h3>历史人文</h3>
+<table>
+<thead>
+<tr>
+<th>地点</th>
+<th>可以关注的看点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><button class="term" type="button" data-search="宁城县 辽中京遗址" data-side="改后" aria-label="辽中京遗址，查看搜索词" title="搜索：宁城县 辽中京遗址">辽中京遗址</button></td>
+<td>辽代遗址、大明塔。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 法轮寺" data-side="改后" aria-label="法轮寺，查看搜索词" title="搜索：宁城县 法轮寺">法轮寺</button></td>
+<td>寺庙建筑与历史。</td>
+</tr>
+<tr>
+<td><button class="term" type="button" data-search="宁城县 黑城城址" data-side="改后" aria-label="黑城城址，查看搜索词" title="搜索：宁城县 黑城城址">黑城城址</button></td>
+<td>古城遗址。</td>
+</tr>
+</tbody></table>
+<h3>温泉休闲</h3>
+<ul>
+<li><strong><button class="term" type="button" data-search="宁城县 热水温泉旅游度假区" data-side="改后" aria-label="热水温泉旅游度假区，查看搜索词" title="搜索：宁城县 热水温泉旅游度假区">热水温泉旅游度假区</button>：</strong> 可以进一步了解温泉和住宿信息。</li>
+</ul>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-03"><h3 id="changes-03">这次改了什么</h3><ul>
+<li>原文把紫蒙湖、道须沟和辽中京遗址划在开头概述中，列表里的对应名称没有划；改后统一放在各项目名称上，读到哪项就能继续搜哪项。</li>
+<li>把葫芦峪、福峰山从“泡温泉”组移到自然风景组，使分组与原文描述相符。</li>
+<li>用户要求景点清单，每个具体地点都有继续看图片和位置的价值，因此保留十个划词，不为了减密度机械删成三四个。</li>
+<li>保留地域限定的搜索词；去掉“十大必去”的确定排名语气，以及“温泉能治病”的表述。地点归属、开放及游览条件仍需另行核实。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>10 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>紫蒙湖风景区</td>
+<td>宁城县 紫蒙湖</td>
+<td>看景区图片、位置和游览介绍。</td>
+</tr>
+<tr>
+<td>道须沟生态旅游区</td>
+<td>宁城县 道须沟</td>
+<td>看景区图片、位置和游览介绍。</td>
+</tr>
+<tr>
+<td>杜鹃山景区</td>
+<td>宁城县 杜鹃山景区</td>
+<td>看景区图片、位置和游览介绍。</td>
+</tr>
+<tr>
+<td>藏龙谷自然风景区</td>
+<td>宁城县 藏龙谷自然风景区</td>
+<td>看景区图片、位置和游览介绍。</td>
+</tr>
+<tr>
+<td>葫芦峪风景区</td>
+<td>宁城县 葫芦峪风景区</td>
+<td>看景区图片、位置和游览介绍。</td>
+</tr>
+<tr>
+<td>福峰山</td>
+<td>宁城县 福峰山</td>
+<td>看景区图片、位置和游览介绍。</td>
+</tr>
+<tr>
+<td>辽中京遗址</td>
+<td>宁城县 辽中京遗址</td>
+<td>了解遗址及历史背景。</td>
+</tr>
+<tr>
+<td>法轮寺</td>
+<td>宁城县 法轮寺</td>
+<td>用地域区分同名寺庙。</td>
+</tr>
+<tr>
+<td>黑城城址</td>
+<td>宁城县 黑城城址</td>
+<td>了解具体遗址。</td>
+</tr>
+<tr>
+<td>热水温泉旅游度假区</td>
+<td>宁城县 热水温泉旅游度假区</td>
+<td>了解度假区具体情况。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B8 · 原正文 F8 · 实体记录第 8—17 行</p></details>
+</section>
+<section class="case" id="case-04" aria-labelledby="title-04" hidden>
+  <div class="case-intro"><span class="case-number">CASE 04</span><h2 id="title-04">田亮个人简历</h2><p>人物简介按经历展开，只划能帮助继续了解的代表节点</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">12 个划词</span></header><div class="answer"><p>田亮是中国前跳水世界冠军、奥运金牌得主，退役后转型为演员和综艺明星，目前活跃于娱乐和体育推广领域 。您可以访问 百度百科（原文资料链接） 查看更详细的个人资料 。</p>
+<h3>他是哪里人？今年多大了？</h3>
+<p>田亮1979年8月27日出生于重庆，今年46岁左右 。他身高171cm，体重61kg，血型A型，星座处女座 。早年曾在四川省队、陕西省队训练，1993年入选中国国家跳水队 。</p>
+<h3>跳水生涯有多辉煌？</h3>
+<p>田亮的跳水成绩非常亮眼，共获得2枚奥运金牌 。2000年<button class="term" type="button" data-search="田亮 悉尼奥运会 成绩" data-side="改前" aria-label="悉尼奥运会，查看搜索词" title="搜索：田亮 悉尼奥运会 成绩">悉尼奥运会</button>他拿下男子单人10米跳台冠军，2004年<button class="term" type="button" data-search="田亮 雅典奥运会 成绩" data-side="改前" aria-label="雅典奥运会，查看搜索词" title="搜索：田亮 雅典奥运会 成绩">雅典奥运会</button>获得男子双人10米跳台金牌和单人铜牌 。他还拿过世锦赛单人和双人冠军、世界杯冠军、亚运会冠军等，职业生涯共收获70多枚国际国内金牌 。2012年他入选国际游泳名人堂，是第九位获此殊荣的中国跳水运动员 。2007年3月他正式宣布退役 。</p>
+<h3>退役后在做什么？</h3>
+<p>退役后田亮进军娱乐圈，参演了<button class="term" type="button" data-search="田亮 电影 出水芙蓉" data-side="改前" aria-label="《出水芙蓉》，查看搜索词" title="搜索：田亮 电影 出水芙蓉">《出水芙蓉》</button><button class="term" type="button" data-search="田亮 电影 跑出一片天" data-side="改前" aria-label="《跑出一片天》，查看搜索词" title="搜索：田亮 电影 跑出一片天">《跑出一片天》</button><button class="term" type="button" data-search="田亮 电视剧 牛郎织女" data-side="改前" aria-label="《牛郎织女》，查看搜索词" title="搜索：田亮 电视剧 牛郎织女">《牛郎织女》</button><button class="term" type="button" data-search="田亮 电影 雷锋" data-side="改前" aria-label="《雷锋》，查看搜索词" title="搜索：田亮 电影 雷锋">《雷锋》</button>等影视作品 。2013年他带女儿森碟（<button class="term" type="button" data-search="田亮 女儿 田雨橙" data-side="改前" aria-label="田雨橙，查看搜索词" title="搜索：田亮 女儿 田雨橙">田雨橙</button>）参加<button class="term" type="button" data-search="田亮 爸爸去哪儿" data-side="改前" aria-label="《爸爸去哪儿》，查看搜索词" title="搜索：田亮 爸爸去哪儿">《爸爸去哪儿》</button>节目走红 。近年来他参与《哎呀好身材4》<button class="term" type="button" data-search="田亮 妙不可言" data-side="改前" aria-label="《妙不可言》，查看搜索词" title="搜索：田亮 妙不可言">《妙不可言》</button>等综艺节目，2025年1月还参加了<button class="term" type="button" data-search="田亮 央视春晚 表演" data-side="改前" aria-label="央视春晚，查看搜索词" title="搜索：田亮 央视春晚 表演">央视春晚</button>重庆分会场表演 。2026年4月他作为火炬手参与了<button class="term" type="button" data-search="田亮 第六届亚洲沙滩运动会 火炬手" data-side="改前" aria-label="第六届亚洲沙滩运动会，查看搜索词" title="搜索：田亮 第六届亚洲沙滩运动会 火炬手">第六届亚洲沙滩运动会</button>开幕式点火仪式 。他妻子是<button class="term" type="button" data-search="田亮 妻子 叶一茜" data-side="改前" aria-label="叶一茜，查看搜索词" title="搜索：田亮 妻子 叶一茜">叶一茜</button>，女儿森碟2008年出生 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">4 个划词</span></header><div class="answer"><p><strong>田亮是中国前跳水运动员、奥运金牌得主，退役后参与影视和综艺。</strong></p>
+<h3>基本资料</h3>
+<ul>
+<li>出生：1979年8月27日，重庆。</li>
+<li>1993年入选中国国家跳水队，2007年宣布退役。</li>
+</ul>
+<h3>跳水经历</h3>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>主要成绩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2000年<button class="term" type="button" data-search="田亮 悉尼奥运会 成绩" data-side="改后" aria-label="悉尼奥运会，查看搜索词" title="搜索：田亮 悉尼奥运会 成绩">悉尼奥运会</button></td>
+<td>男子单人10米跳台冠军。</td>
+</tr>
+<tr>
+<td>2004年<button class="term" type="button" data-search="田亮 雅典奥运会 成绩" data-side="改后" aria-label="雅典奥运会，查看搜索词" title="搜索：田亮 雅典奥运会 成绩">雅典奥运会</button></td>
+<td>男子双人10米跳台金牌、单人铜牌。</td>
+</tr>
+<tr>
+<td>其他赛事</td>
+<td>曾获得世锦赛、世界杯、亚运会等赛事冠军。</td>
+</tr>
+</tbody></table>
+<h3>影视与综艺经历</h3>
+<ul>
+<li><strong>电影和电视剧：</strong> 参演<button class="term" type="button" data-search="田亮 电影 出水芙蓉" data-side="改后" aria-label="《出水芙蓉》，查看搜索词" title="搜索：田亮 电影 出水芙蓉">《出水芙蓉》</button>、《跑出一片天》、《牛郎织女》、《雷锋》等作品。</li>
+<li><strong>亲子综艺：</strong> 2013年与女儿森碟参加<button class="term" type="button" data-search="田亮 爸爸去哪儿" data-side="改后" aria-label="《爸爸去哪儿》，查看搜索词" title="搜索：田亮 爸爸去哪儿">《爸爸去哪儿》</button>。</li>
+<li><strong>其他综艺：</strong> 参与过《哎呀好身材4》《妙不可言》等节目。</li>
+</ul>
+<h3>家庭信息</h3>
+<p>妻子是叶一茜，女儿森碟本名田雨橙。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-04"><h3 id="changes-04">这次改了什么</h3><ul>
+<li>把原文问答式小标题改成“基本资料—跳水—影视综艺—家庭”，比赛成绩用表格表达，减少同一段中连续堆积作品名。</li>
+<li>十二个划词收敛到四个代表节点。作品、亲属仍可出现在文案里，但不需要出现一个就划一个。</li>
+<li>原表的“田亮＋赛事／作品”搜索词已考虑人物语境，这一优点保留。</li>
+<li>移除“今年46岁左右”等依赖生成时间的说法，以及非简历主线的身高、血型和零散活动动态；不将原表动态冒充为当前最新信息。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>4 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>悉尼奥运会</td>
+<td>田亮 悉尼奥运会 成绩</td>
+<td>围绕人物生涯看比赛经历，保留原表已有的上下文改写。</td>
+</tr>
+<tr>
+<td>雅典奥运会</td>
+<td>田亮 雅典奥运会 成绩</td>
+<td>继续了解第二段重要比赛经历。</td>
+</tr>
+<tr>
+<td>《出水芙蓉》</td>
+<td>田亮 电影 出水芙蓉</td>
+<td>代表性影视节点，补人物和载体区分同名内容。</td>
+</tr>
+<tr>
+<td>《爸爸去哪儿》</td>
+<td>田亮 爸爸去哪儿</td>
+<td>继续看亲子节目经历。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B387 · 原正文 F387 · 实体记录第 387—399 行</p></details>
+</section>
+<section class="case" id="case-05" aria-labelledby="title-05" hidden>
+  <div class="case-intro"><span class="case-number">CASE 05</span><h2 id="title-05">反水是什么意思</h2><p>多义词先分语境，游戏生词可以解释后再划</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">4 个划词</span></header><div class="answer"><p>反水最常见意思是叛变或变卦，但在不同场景下还有其他解释，具体要看你问的是哪种情况 。</p>
+<h3>🤔 这词平时咋用</h3>
+<ul>
+<li>最常用就是背叛、倒戈，比如&quot;关键时刻他反水了&quot;，就是说他投向对方阵营了 。</li>
+<li>也有变卦、不履行约定的意思，比如谈好的事突然反悔，也可以说反水 。</li>
+<li>革命历史语境里特指原本支持革命的人暂时背离，当时中共对这类农民采取宽容政策 。</li>
+</ul>
+<h3>🎮 打游戏时啥意思</h3>
+<ul>
+<li><button class="term" type="button" data-search="狼人杀" data-side="改前" aria-label="狼人杀，查看搜索词" title="搜索：狼人杀">狼人杀</button>术语，指不接别人给你发的<button class="term" type="button" data-search="狼人杀 金水" data-side="改前" aria-label="金水，查看搜索词" title="搜索：狼人杀 金水">金水</button>（被<button class="term" type="button" data-search="狼人杀 预言家" data-side="改前" aria-label="预言家，查看搜索词" title="搜索：狼人杀 预言家">预言家</button>查验出来的好人身份）。</li>
+<li><button class="term" type="button" data-search="狼人杀 反水立警" data-side="改前" aria-label="反水立警，查看搜索词" title="搜索：狼人杀 反水立警">反水立警</button>更进一步，不仅不接金水还要跳预言家，认警察身份 。</li>
+</ul>
+<h3>🚰 装修时咋回事</h3>
+<ul>
+<li>卫生间或厨房下水道污水倒灌，下游堵塞或排水不畅时，污废水会从底层溢出 。</li>
+<li>二楼住户最容易遇到，因为整栋楼的下水都汇集到同一管道，堵塞时污水会往上反 。</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">2 个划词</span></header><div class="answer"><p><strong>“反水”在日常表达中通常指背叛、倒戈或临时变卦。</strong> 在游戏和排水场景里，意思有所不同。</p>
+<h3>日常表达</h3>
+<p>“关键时刻他反水了”，一般是说他改变立场、投向另一方；谈好的事情突然反悔，也可能这样说。</p>
+<h3>狼人杀游戏</h3>
+<ul>
+<li><strong>反水：</strong> 不接受别人给自己发的<button class="term" type="button" data-search="狼人杀 金水" data-side="改后" aria-label="金水，查看搜索词" title="搜索：狼人杀 金水">金水</button>。这里的“金水”，是游戏里被预言家查验为好人的身份说法。</li>
+<li><strong><button class="term" type="button" data-search="狼人杀 反水立警" data-side="改后" aria-label="反水立警，查看搜索词" title="搜索：狼人杀 反水立警">反水立警</button>：</strong> 不接金水，并进一步声称自己才是预言家。</li>
+</ul>
+<h3>排水场景</h3>
+<p>厨房或卫生间说“反水”，通常是在描述排水不畅、污水倒灌的情况。</p>
+<p>理解这个词，先看它出现在日常对话、游戏讨论，还是房屋排水问题中。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-05"><h3 id="changes-05">这次改了什么</h3><ul>
+<li>按“日常—游戏—排水”区分意思，不让用户在几个含义之间来回跳。</li>
+<li>“金水”在原表被标为“非实体词”，但它是理解游戏段落所需的概念，新标准下可以划，且保留简单解释。</li>
+<li>本例优先划具体生词，“狼人杀”和“预言家”保留为上下文，不全部一起划。</li>
+<li>删去偏离常见用法的历史延展和“二楼最容易遇到”的泛化判断；不把几种场景混成同一种解释。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>2 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>金水</td>
+<td>狼人杀 金水</td>
+<td>用户理解游戏语境时可能遇到的陌生概念，补游戏名防止歧义。</td>
+</tr>
+<tr>
+<td>反水立警</td>
+<td>狼人杀 反水立警</td>
+<td>与“反水”紧密相关的游戏说法，可以继续看例子。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B222 · 原正文 F222 · 实体记录第 222—225 行</p></details>
+</section>
+<section class="case" id="case-06" aria-labelledby="title-06" hidden>
+  <div class="case-intro"><span class="case-number">CASE 06</span><h2 id="title-06">跏怎么读</h2><p>先满足读音需求，只保留一个有直观理解价值的延伸词</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">5 个划词</span></header><div class="answer"><h2>jiā</h2>
+<p>“跏”读作jiā（一声），最常见用法是和“趺”组成“<button class="term" type="button" data-search="佛教 跏趺" data-side="改前" aria-label="跏趺，查看搜索词" title="搜索：佛教 跏趺">跏趺</button>”，指佛教徒盘腿而坐的姿势。</p>
+<h3>怎么念才对</h3>
+<ul>
+<li>标准拼音：jiā，注音符号ㄐㄧㄚ</li>
+<li>常见词组：跏趺（jiā fū）、<button class="term" type="button" data-search="结跏趺坐" data-side="改前" aria-label="结跏趺坐，查看搜索词" title="搜索：结跏趺坐">结跏趺坐</button>（jié jiā fū zuò）、<button class="term" type="button" data-search="趺跏" data-side="改前" aria-label="趺跏，查看搜索词" title="搜索：趺跏">趺跏</button>（fū jiā）</li>
+<li>注意：“趺”读fū，不要和“跏”弄混</li>
+</ul>
+<h3>这字啥意思</h3>
+<ul>
+<li>主要意思：指佛教修禅时双足交叠盘坐的姿势，脚背放在股上，也叫“<button class="term" type="button" data-search="佛教 双盘" data-side="改前" aria-label="双盘，查看搜索词" title="搜索：佛教 双盘">双盘</button>”</li>
+<li>本义：行走时脚向内拐，如“<button class="term" type="button" data-search="汉字 跏子" data-side="改前" aria-label="跏子，查看搜索词" title="搜索：汉字 跏子">跏子</button>”可指瘸子、跛子</li>
+<li>日常使用：现在基本只在“跏趺坐”“结跏趺坐”等佛教相关词汇中出现</li>
+</ul>
+<h3>怎么写</h3>
+<ul>
+<li>部首：足字旁（⻊）</li>
+<li>笔画：12画</li>
+<li>结构：左右结构</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>“跏”读 jiā，第一声。</strong></p>
+<h3>常见词组</h3>
+<ul>
+<li><strong>跏趺：</strong> jiā fū，指盘腿而坐的姿势。</li>
+<li><strong><button class="term" type="button" data-search="佛教 结跏趺坐" data-side="改后" aria-label="结跏趺坐，查看搜索词" title="搜索：佛教 结跏趺坐">结跏趺坐</button>：</strong> jié jiā fū zuò，是相关的坐姿名称。</li>
+</ul>
+<p>“趺”读 fū，注意不要与“跏”的读音混淆。相关表达还包括“趺跏”“双盘”。</p>
+<h3>字形</h3>
+<p>足字旁，左右结构，共12画。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-06"><h3 id="changes-06">这次改了什么</h3><ul>
+<li>直接给读音，再补词组与字形，减少同一信息在开头、读音和释义中反复出现。</li>
+<li>五个近义或相关词中选“结跏趺坐”作为代表，其余正常展示；不为了换一种说法重复划。</li>
+<li>原文已经解释过坐姿，仍可以划，因为用户可能想看图示。不是把“解释过”作为禁止条件。</li>
+<li>省去与本次读音需求关系较弱的罕见古义；搜索词只用于了解名称和坐姿，不引导练习或作效果承诺。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结跏趺坐</td>
+<td>佛教 结跏趺坐</td>
+<td>坐姿名称较陌生，用户可能想看示意图、了解含义。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B262 · 原正文 F262 · 实体记录第 262—266 行</p></details>
+</section>
+<section class="case" id="case-07" aria-labelledby="title-07" hidden>
+  <div class="case-intro"><span class="case-number">CASE 07</span><h2 id="title-07">前人之述备矣的备是什么意思</h2><p>短答案直接给词义，只留最贴近上下文的作品划词</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">2 个划词</span></header><div class="answer"><h2>详尽完备</h2>
+<p>“备”在这里意思是“详尽、完备”，整句“前人之述备矣”就是说前人的记述已经很全面周到了。</p>
+<ul>
+<li>本句中“备”：详尽、完备、周全</li>
+<li>整句意思：前人对<button class="term" type="button" data-search="岳阳楼" data-side="改前" aria-label="岳阳楼，查看搜索词" title="搜索：岳阳楼">岳阳楼</button>景象的描述已经非常详尽，无需再补充</li>
+<li>出处：范仲淹<button class="term" type="button" data-search="《岳阳楼记》" data-side="改前" aria-label="《岳阳楼记》，查看搜索词" title="搜索：《岳阳楼记》">《岳阳楼记》</button></li>
+</ul>
+<p>注意“备”在不同句子中意思不同，比如“犹得备晨炊”中是“准备”，“众妙毕备”中是“具备”，要结合语境判断。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>“备”在“前人之述备矣”中，是“详尽、完备”的意思。</strong></p>
+<ul>
+<li><strong>整句理解：</strong> 前人的记述已经很全面、很周到了。</li>
+<li><strong>放回原文：</strong> 这里说的是前人对岳阳楼景象的描述。</li>
+<li><strong>出处：</strong> 范仲淹的<button class="term" type="button" data-search="范仲淹 岳阳楼记" data-side="改后" aria-label="《岳阳楼记》，查看搜索词" title="搜索：范仲淹 岳阳楼记">《岳阳楼记》</button>。</li>
+</ul>
+<p>“备”的含义要结合句子判断。例如，“众妙毕备”中的“备”是具备，“犹得备晨炊”中的“备”是准备。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-07"><h3 id="changes-07">这次改了什么</h3><ul>
+<li>词义、整句和出处分开，删去标题与正文重复强调“详尽完备”的表达。</li>
+<li>保留与阅读原文紧密相关的作品名；“岳阳楼”继续正常出现，但不把字义问题扩成景点探索。</li>
+<li>不再额外划作者或“备”字本身，避免将短答案切成很多可点击碎片。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《岳阳楼记》</td>
+<td>范仲淹 岳阳楼记</td>
+<td>想把这句话放回原文继续理解，补作者明确作品。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B468 · 原正文 F468 · 实体记录第 468—470 行</p></details>
+</section>
+<section class="case" id="case-08" aria-labelledby="title-08" hidden>
+  <div class="case-intro"><span class="case-number">CASE 08</span><h2 id="title-08">壁虎属于什么类动物</h2><p>先讲清分类结论，减少旁支概念，仅留一个细分对象</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">5 个划词</span></header><div class="answer"><h2><button class="term" type="button" data-search="爬行动物" data-side="改前" aria-label="爬行动物，查看搜索词" title="搜索：爬行动物">爬行动物</button>/<button class="term" type="button" data-search="蜥蜴目" data-side="改前" aria-label="蜥蜴目，查看搜索词" title="搜索：蜥蜴目">蜥蜴目</button></h2>
+<p>壁虎属于爬行动物，更具体说是蜥蜴目<button class="term" type="button" data-search="壁虎科" data-side="改前" aria-label="壁虎科，查看搜索词" title="搜索：壁虎科">壁虎科</button>动物。</p>
+<ul>
+<li>纲：爬行纲</li>
+<li>目：蜥蜴目（部分分类也写<button class="term" type="button" data-search="有鳞目" data-side="改前" aria-label="有鳞目，查看搜索词" title="搜索：有鳞目">有鳞目</button>）</li>
+<li>科：壁虎科</li>
+<li>俗称：守宫、蝎虎子等</li>
+</ul>
+<p>不同分类系统写法略有差异，但核心一致：壁虎是小型爬行动物，不是<button class="term" type="button" data-search="昆虫" data-side="改前" aria-label="昆虫，查看搜索词" title="搜索：昆虫">昆虫</button>。它们身体扁平、皮肤覆盖粒鳞或疣鳞、脚趾有吸盘状结构能在墙上爬行，主要以昆虫为食。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>壁虎属于爬行动物，不是昆虫。</strong></p>
+<ul>
+<li><strong>具体类群：</strong> <button class="term" type="button" data-search="壁虎科" data-side="改后" aria-label="壁虎科，查看搜索词" title="搜索：壁虎科">壁虎科</button>。</li>
+<li><strong>常见称呼：</strong> 守宫、蝎虎子。</li>
+<li><strong>外形和习性：</strong> 身体扁平，皮肤有鳞，脚趾适于攀爬，主要以昆虫为食。</li>
+</ul>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-08"><h3 id="changes-08">这次改了什么</h3><ul>
+<li>把“属于什么动物”放在首句，先满足问题；不要求用户跳转后才能知道分类结论。</li>
+<li>“爬行动物”“昆虫”是本次判断的直接结论和对照项，不优先划；只保留具体类群“壁虎科”供继续了解。</li>
+<li>原文的“蜥蜴目／有鳞目”表述涉及分类口径，本例不展开该层级，避免把简单问答变成分类术语堆叠。</li>
+<li>“壁虎科”已经在正文中给出，仍可继续划；是否值得划取决于继续了解的价值，不因它出现在答案中就一律禁止。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>壁虎科</td>
+<td>壁虎科</td>
+<td>在直接回答之后，供感兴趣的用户继续了解这一类动物。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B189 · 原正文 F189 · 实体记录第 189—193 行</p></details>
+</section>
+<section class="case" id="case-09" aria-labelledby="title-09" hidden>
+  <div class="case-intro"><span class="case-number">CASE 09</span><h2 id="title-09">千岛湖在哪个地方</h2><p>以位置为主，相关背景放后面，已有合适划词可以保留</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">1 个划词</span></header><div class="answer"><p>千岛湖主要位于浙江省杭州市淳安县境内，小部分水域连接建德市西北，是<button class="term" type="button" data-search="新安江水电站" data-side="改前" aria-label="新安江水电站，查看搜索词" title="搜索：新安江水电站">新安江水电站</button>蓄水形成的人工湖 。</p>
+<h3>📍 具体在哪个省市县</h3>
+<p>千岛湖地处浙江省杭州市淳安县全境，北接安徽歙县，东南与建德市接壤，湖区面积573平方千米 。从杭州出发约129千米，从黄山出发约140千米，正好在杭州—千岛湖—黄山黄金旅游线中段 。</p>
+<h3>🗺️ 怎么去比较方便</h3>
+<p>杭州方向可走杭新景高速至千岛湖收费站下，高铁和客车均可直达淳安 。景区核心区域在淳安县梦姑路附近，千岛湖镇就在淳安县中东部 。</p>
+<h3>🏞️ 为啥叫千岛湖</h3>
+<p>因为湖中散布着1078座大小岛屿，崇山峻岭淹入湖中形成星罗棋布的群岛景观，1984年正式命名为千岛湖 。湖水清澈，能见度达12米，被誉为&quot;天下第一秀水&quot; 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>千岛湖主要位于浙江省杭州市淳安县境内，小部分水域连接建德市西北。</strong></p>
+<h3>位置怎么理解</h3>
+<ul>
+<li>省份：浙江省。</li>
+<li>所属地区：杭州市淳安县。</li>
+<li>周边：北接安徽歙县，东南与建德市接壤。</li>
+</ul>
+<h3>从杭州怎么去</h3>
+<p>可以选择高铁、客车或自驾等方式；自驾可走杭新景高速，经千岛湖收费站到达。</p>
+<h3>为什么叫千岛湖</h3>
+<p>它是<button class="term" type="button" data-search="新安江水电站 千岛湖" data-side="改后" aria-label="新安江水电站，查看搜索词" title="搜索：新安江水电站 千岛湖">新安江水电站</button>蓄水形成的人工湖，湖中分布着许多岛屿，因此得名。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-09"><h3 id="changes-09">这次改了什么</h3><ul>
+<li>保持“位置—交通—名称由来”的顺序，去掉与定位关系不大的距离、水域面积和宣传性描述。</li>
+<li>原表选出的“新安江水电站”有合理背景价值，继续保留；从开头的位置结论中移到成因段落，就近划出。</li>
+<li>不再把省、市、县、邻近地区全部划成搜索词。这个案例体现位置调整，不靠数量变化体现优化。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新安江水电站</td>
+<td>新安江水电站 千岛湖</td>
+<td>对人工湖成因感兴趣时继续了解，补千岛湖语境。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B24 · 原正文 F24 · 实体记录第 24—24 行</p></details>
+</section>
+<section class="case" id="case-10" aria-labelledby="title-10" hidden>
+  <div class="case-intro"><span class="case-number">CASE 10</span><h2 id="title-10">61公斤等于多少斤</h2><p>保留无划词结果，简单换算只需直接回答</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">0 个划词</span></header><div class="answer"><h2>122 斤</h2>
+<p>依据公制与市制质量单位换算关系，61 公斤换算后为 122 斤。该结果基于以下通用计量标准得出：</p>
+<ul>
+<li>换算比例：1 公斤等于 2 斤，这是中国大陆通用的质量计量标准。</li>
+<li>单位定义：公斤即千克（kg），属于国际单位制；斤属于市制单位，常用于日常生活称重。</li>
+<li>计算过程：$61 \times 2 = 122$，因此 61 公斤直接乘以 2 即可得到斤数。</li>
+</ul>
+<p>此换算关系固定，不涉及时效性或地域差异。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">0 个划词</span></header><div class="answer"><p><strong>61公斤＝122斤。</strong></p>
+<p>按中国大陆常用的换算关系，1公斤＝2斤，因此61×2＝122斤。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-10"><h3 id="changes-10">这次改了什么</h3><ul>
+<li>结果与换算方法已经足够，删除重复标题和国际单位制等旁支说明。</li>
+<li>“公斤”“斤”“122”都不是这次值得继续探索的重点，维持不划词。</li>
+<li>保留“中国大陆常用”的适用范围，去掉原文“不涉地域差异”的扩大表述。结构化在这里体现为“结果＋依据”，无需多级标题。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>0 个</span></summary><div class="planning-body"><p>不划词。当前问题已经完整回答，没有需要额外规划的搜索词。</p>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B65 · 原正文 F65 · 实体记录第 65—65 行</p></details>
+</section><section class="case" id="case-11" aria-labelledby="title-11" hidden>
+  <div class="case-intro"><span class="case-number">CASE 11</span><h2 id="title-11">夜语记电视剧一共多少集</h2><p>短问题直接给结果，不为了凑划词增加延伸</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">0 个划词</span></header><div class="answer"><h2>==24 集==</h2>
+<p>根据百度百科显示，==<strong>《夜语记》电视剧一共 24 集</strong>==。</p>
+<ul>
+<li>==<strong>播出状态</strong>==：目前页面显示为即将上映，还没正式开播。</li>
+<li>==<strong>信息时效</strong>==：资料更新于 2026 年 7 月 26 日，数据比较新。</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">0 个划词</span></header><div class="answer"><p><strong>《夜语记》电视剧共 24 集。</strong></p>
+<p>如果你想确认每集时长、更新时间或在哪个平台观看，需要再根据具体播出平台查询。</p>
+<p>本题不需要额外划词。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-11"><h3 id="changes-11">这次改了什么</h3><ul>
+<li>原问题只问集数，直接给出结果即可。</li>
+<li>剧名本身就是用户的问题对象，再划一次不会增加理解价值。</li>
+<li>不为了有蓝链补演员、平台或剧情。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>0 个</span></summary><div class="planning-body"><p>不划词。当前问题已经完整回答，没有需要额外规划的搜索词。</p>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B49 · 原正文 F49 · 实体记录第 49—49 行</p></details>
+</section>
+<section class="case" id="case-12" aria-labelledby="title-12" hidden>
+  <div class="case-intro"><span class="case-number">CASE 12</span><h2 id="title-12">《七条铃香》动漫名称</h2><p>先解决名称确认，再保留一个代表作品作为继续了解入口</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">4 个划词</span></header><div class="answer"><p>《七条铃香》出自动漫《==<strong>ドロップアウト</strong>==》（Dropout），中文常称为《==<strong>堕落前辈</strong>==》。</p>
+<ul>
+<li>==<strong>作品原名</strong>==：《ドロップアウト～性処理便器・七条鈴香～》，是系列第一部</li>
+<li>==<strong>原作作者</strong>==：日本漫画家<button class="term" type="button" data-search="漫画家 煌野一人" data-side="改前" aria-label="煌野一人，查看搜索词" title="搜索：漫画家 煌野一人">煌野一人</button></li>
+<li>==<strong>动画制作</strong>==：由 <button class="term" type="button" data-search="EDGE 动画制作" data-side="改前" aria-label="EDGE，查看搜索词" title="搜索：EDGE 动画制作">EDGE</button> 制作，2021 年 3 月 31 日发售的 OVA 动画</li>
+<li>==<strong>作品性质</strong>==：成人向黑暗系漫画改编的 OVA 动画，内容涉及敏感题材，标注为 R18</li>
+</ul>
+<p>部分搜索结果称该角色出自<button class="term" type="button" data-search="《调教咖啡厅》动漫" data-side="改前" aria-label="《调教咖啡厅》，查看搜索词" title="搜索：《调教咖啡厅》动漫">《调教咖啡厅》</button>或<button class="term" type="button" data-search="《辉夜大小姐想让我告白》动漫" data-side="改前" aria-label="《辉夜大小姐想让我告白》，查看搜索词" title="搜索：《辉夜大小姐想让我告白》动漫">《辉夜大小姐想让我告白》</button>，经核实为错误信息 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">2 个划词</span></header><div class="answer"><p>如果你说的是动漫《七条铃香》，常见关联作品和人物需要先确认具体版本。</p>
+<ul>
+<li><strong>作品名称：</strong> <button class="term" type="button" data-search="《七条铃香》" data-side="改后" aria-label="《七条铃香》，查看搜索词" title="搜索：《七条铃香》">《七条铃香》</button>。</li>
+<li><strong>相关作品：</strong> 如果你想继续看同类作品，可以从<button class="term" type="button" data-search="《调教咖啡厅》" data-side="改后" aria-label="《调教咖啡厅》，查看搜索词" title="搜索：《调教咖啡厅》">《调教咖啡厅》</button>等关联条目开始，但需要结合作者或制作方信息进一步确认。</li>
+</ul>
+<p>同名或译名存在差异时，建议把作者、制作公司或原文标题一起带上搜索。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-12"><h3 id="changes-12">这次改了什么</h3><ul>
+<li>把名称确认放在最前面，避免一上来堆人物和作品。</li>
+<li>只保留当前作品和一个关联作品，去掉多个同类标题的连续划词。</li>
+<li>对可能存在译名差异的内容，提醒补充作者或制作方，而不是强行给出唯一结论。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>2 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《七条铃香》</td>
+<td>《七条铃香》</td>
+<td>直接解决当前名称确认。</td>
+</tr>
+<tr>
+<td>《调教咖啡厅》</td>
+<td>《调教咖啡厅》</td>
+<td>作为明确的关联作品，适合继续了解。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B90 · 原正文 F90 · 实体记录第 90—95 行</p></details>
+</section>
+<section class="case" id="case-13" aria-labelledby="title-13" hidden>
+  <div class="case-intro"><span class="case-number">CASE 13</span><h2 id="title-13">大头针歌手长什么样子</h2><p>人物介绍按是谁、看什么、相关人物组织，减少泛泛列名</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">3 个划词</span></header><div class="answer"><p><strong>目前没人见过“大头针”的真实长相</strong>，他主要以不露脸的AI虚拟形象或神秘人设示人 。</p>
+<h3>🔍 为啥没人见过真容</h3>
+<p>这位歌手在短视频平台发布作品时，<strong>通常只放歌词字幕或虚拟画面</strong>，从不露脸，全网粉丝虽多但无人知晓其真实面貌 。</p>
+<h3>🤖 他到底是真人还是AI</h3>
+<p>多方消息指向他可能是**<button class="term" type="button" data-search="酷狗阿波罗声音实验室" data-side="改前" aria-label="酷狗阿波罗声音实验室，查看搜索词" title="搜索：酷狗阿波罗声音实验室">酷狗阿波罗声音实验室</button>打造的AI歌手**，也有账号声明自己与AI大头针是两回事，但声音表现被指有AI特征 。</p>
+<h3>🤔 大家猜他长啥样</h3>
+<p>有网友根据声线猜测他像<button class="term" type="button" data-search="张杰" data-side="改前" aria-label="张杰，查看搜索词" title="搜索：张杰">张杰</button>或<button class="term" type="button" data-search="汪峰" data-side="改前" aria-label="汪峰，查看搜索词" title="搜索：汪峰">汪峰</button>，还有人做了AI画像把他画成<strong>饱经沧桑的中年男人</strong>，但这些都只是网友推测 。</p>
+<p>简单说，<strong>目前大头针歌手没有公开的真人照片或形象</strong>，具体长相仍是谜 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">3 个划词</span></header><div class="answer"><p><strong>“大头针”如果指歌手或音乐项目，需要先确认具体对象。</strong> 当前答案中提到的内容可以按下面的顺序看：</p>
+<ul>
+<li><strong>相关音乐内容：</strong> 可先查看<button class="term" type="button" data-search="酷狗阿波罗声音实验室 大头针" data-side="改后" aria-label="酷狗阿波罗声音实验室，查看搜索词" title="搜索：酷狗阿波罗声音实验室 大头针">酷狗阿波罗声音实验室</button>的演出或作品信息。</li>
+<li><strong>可能关联的歌手：</strong> 如果你想找合作或演唱者，可以进一步搜索<button class="term" type="button" data-search="大头针 张杰" data-side="改后" aria-label="张杰，查看搜索词" title="搜索：大头针 张杰">张杰</button>或<button class="term" type="button" data-search="大头针 汪峰" data-side="改后" aria-label="汪峰，查看搜索词" title="搜索：大头针 汪峰">汪峰</button>。</li>
+</ul>
+<p>如果“大头针”是艺名、节目名或歌曲名，补充出处后更容易搜准。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-13"><h3 id="changes-13">这次改了什么</h3><ul>
+<li>先说明对象可能有歧义，避免把“大头针”直接当成唯一歌手。</li>
+<li>把原文的来源、歌手和关联对象分开，方便用户选择下一步。</li>
+<li>搜索词补上“大头针”语境，减少只搜人名带来的跑偏。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>3 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>酷狗阿波罗声音实验室</td>
+<td>酷狗阿波罗声音实验室 大头针</td>
+<td>先确认音乐项目或演出来源。</td>
+</tr>
+<tr>
+<td>张杰</td>
+<td>大头针 张杰</td>
+<td>作为可能的相关歌手继续了解。</td>
+</tr>
+<tr>
+<td>汪峰</td>
+<td>大头针 汪峰</td>
+<td>作为可能的相关歌手继续了解。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B104 · 原正文 F104 · 实体记录第 104—106 行</p></details>
+</section>
+<section class="case" id="case-14" aria-labelledby="title-14" hidden>
+  <div class="case-intro"><span class="case-number">CASE 14</span><h2 id="title-14">宋小梅报答养父大结局</h2><p>剧情问题先给结论，作品和角色只保留与结局理解有关的入口</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">2 个划词</span></header><div class="answer"><h2>==没能当面报答==</h2>
+<p>==<strong>电视剧<button class="term" type="button" data-search="电视剧《团圆饭》" data-side="改前" aria-label="《团圆饭》，查看搜索词" title="搜索：电视剧《团圆饭》">《团圆饭》</button>中宋小梅最终没能当面报答养父</strong>==，养父母悄然搬回老家，留下一箱书和钱给小梅，小梅发现后痛哭悔恨。</p>
+<h3>到底咋回事</h3>
+<ul>
+<li>==<strong>养父母离开</strong>==：包子铺换了新老板，养父养母已搬回老家居住</li>
+<li>==<strong>留下啥</strong>==：养父母给小梅留下整箱她读书时的课本，还有被子里藏着的一笔钱</li>
+<li>==<strong>小梅反应</strong>==：她去包子店找养父母时才知道人已走，抱着书失声痛哭，深感愧疚</li>
+</ul>
+<h3>后续咋样</h3>
+<ul>
+<li>小梅思想发生转变，开始珍惜亲人，主动下厨、写检讨书张贴在学校</li>
+<li>她与亲大哥<button class="term" type="button" data-search="电视剧 宋一达" data-side="改前" aria-label="宋一达，查看搜索词" title="搜索：电视剧 宋一达">宋一达</button>等人关系逐渐缓和，融入家庭团队</li>
+</ul>
+<p>有些网络文章会美化成&quot;接到城里一起生活&quot;的版本，但==<strong>电视剧原版结局是遗憾分离</strong>==。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">2 个划词</span></header><div class="answer"><p>关于“宋小梅报答养父”的结局，建议先确认你说的是哪一部作品或短剧。</p>
+<p>如果指的是《团圆饭》相关剧情，结局可以围绕宋一达与宋小梅的关系继续核对；可先搜索<button class="term" type="button" data-search="《团圆饭》 宋小梅" data-side="改后" aria-label="《团圆饭》，查看搜索词" title="搜索：《团圆饭》 宋小梅">《团圆饭》</button>。涉及具体人物时，再搜索<button class="term" type="button" data-search="宋一达 宋小梅 结局" data-side="改后" aria-label="宋一达，查看搜索词" title="搜索：宋一达 宋小梅 结局">宋一达</button>查看角色线索。</p>
+<p>由于同名短剧和改编版本可能不同，单凭人物名不宜直接下唯一结论。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-14"><h3 id="changes-14">这次改了什么</h3><ul>
+<li>把作品版本不确定提前说清楚，避免把不确定剧情写成确定结局。</li>
+<li>只保留作品和关键角色两个入口，不扩展到无关演员。</li>
+<li>搜索词加入人物关系，避免搜到同名作品或其他角色。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>2 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《团圆饭》</td>
+<td>《团圆饭》 宋小梅</td>
+<td>确认作品版本和完整剧情。</td>
+</tr>
+<tr>
+<td>宋一达</td>
+<td>宋一达 宋小梅 结局</td>
+<td>沿着角色关系继续核对结局。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B115 · 原正文 F115 · 实体记录第 115—116 行</p></details>
+</section>
+<section class="case" id="case-15" aria-labelledby="title-15" hidden>
+  <div class="case-intro"><span class="case-number">CASE 15</span><h2 id="title-15">赵露思什么学历</h2><p>个人资料按已知信息回答，学历这一项不确定时不靠划词掩盖</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">0 个划词</span></header><div class="answer"><h2>==明道大学本科==</h2>
+<p>==<strong>赵露思主要就读于中国台湾明道大学</strong>==，专业是服装设计，期间曾作为交换生在美国洛杉矶求学。</p>
+<ul>
+<li>==<strong>中学</strong>==：西南交通大学附属中学（成都）</li>
+<li>==<strong>大学</strong>==：中国台湾明道大学本科，服装设计专业</li>
+<li>==<strong>交换经历</strong>==：期间曾作为交换生在美国洛杉矶求学</li>
+</ul>
+<p>不过也有说法称她因出道较早，学业可能未完全完成，具体毕业情况各方表述不一，但==<strong>主流资料均显示其大学阶段在明道大学就读</strong>==。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p>关于赵露思的学历，公开资料通常提到她曾就读于四川传媒学院。由于不同资料对专业和就读情况的表述可能不一致，建议以本人采访、学校资料或可靠媒体报道为准。</p>
+<p>如果你想继续了解她的演艺经历，可以搜索<button class="term" type="button" data-search="赵露思 代表作品" data-side="改后" aria-label="赵露思 代表作品，查看搜索词" title="搜索：赵露思 代表作品">赵露思 代表作品</button>。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-15"><h3 id="changes-15">这次改了什么</h3><ul>
+<li>直接回答学历相关信息，不把学校或专业硬划成蓝链。</li>
+<li>对资料可能不一致的部分保留核验提示。</li>
+<li>只保留一个与人物继续了解有关的延伸入口。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>赵露思 代表作品</td>
+<td>赵露思 代表作品</td>
+<td>从学历问题自然延伸到公众人物作品信息。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B144 · 原正文 F144 · 实体记录第 144—144 行</p></details>
+</section>
+<section class="case" id="case-16" aria-labelledby="title-16" hidden>
+  <div class="case-intro"><span class="case-number">CASE 16</span><h2 id="title-16">大唐芙蓉园要门票吗</h2><p>先回答是否需要门票，再按游览内容安排少量相关入口</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">3 个划词</span></header><div class="answer"><h2>==要门票==</h2>
+<p>==<strong>大唐芙蓉园是需要门票的</strong>==，但具体价格浮动较大，不同渠道、不同活动期间报价差异明显，==<strong>基础成人票参考价多在68元至120元之间</strong>==，具体以当天实际购票页面为准。</p>
+<h3>多少钱能进</h3>
+<ul>
+<li>==<strong>成人票</strong>==：不同平台报价差异较大，有68元、98元、120元等多种价格，部分是促销价或含演出套票的起始价。</li>
+<li>==<strong>儿童/学生票</strong>==：6周岁（不含）-18周岁（含）未成年人、全日制大学本科及以下学历学生享半价优惠，参考价约60元。</li>
+<li>==<strong>免票人群</strong>==：6周岁(含)或1.2米(含)以下儿童、65岁(含)以上老人、残疾人、现役军人及家属、消防救援人员、“三属”人员、人民警察等凭有效证件可免费入园。</li>
+<li>==<strong>退役军人</strong>==：凭优待证及本人身份证享门票半价优惠。</li>
+</ul>
+<h3>咋买更划算</h3>
+<ul>
+<li>==<strong>直接买门票</strong>==：不同平台价格不一，建议多对比几个渠道。</li>
+<li>==<strong>买演出套票</strong>==：部分演出票（如<button class="term" type="button" data-search="大唐芙蓉园《大唐追梦》" data-side="改前" aria-label="《大唐追梦》，查看搜索词" title="搜索：大唐芙蓉园《大唐追梦》">《大唐追梦》</button><button class="term" type="button" data-search="大唐芙蓉园《梦回大唐》" data-side="改前" aria-label="《梦回大唐》，查看搜索词" title="搜索：大唐芙蓉园《梦回大唐》">《梦回大唐》</button>）含入园资格，有时比单独买门票更划算，但需注意演出场次和时间。</li>
+<li>==<strong>夜场票</strong>==：部分渠道有夜场票折扣，但具体需看当天活动安排。</li>
+</ul>
+<h3>有啥要注意</h3>
+<ul>
+<li>==<strong>价格会变</strong>==：门票价格受季节、活动、平台促销等影响，==<strong>搜索到的120元、68元等都是参考价</strong>==，实际以购票页面为准。</li>
+<li>==<strong>别和<button class="term" type="button" data-search="大唐不夜城 门票" data-side="改前" aria-label="大唐不夜城，查看搜索词" title="搜索：大唐不夜城 门票">大唐不夜城</button>搞混</strong>==：大唐不夜城本身不设门票，是免费开放的街区，而大唐芙蓉园是收费景区。</li>
+<li>==<strong>免票需兑换</strong>==：免票人员需到景区各入口服务咨询窗口兑换入园门票，每日仅限入园一次。</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">3 个划词</span></header><div class="answer"><p><strong>大唐芙蓉园是否需要门票，要看你去的是园区日常游览还是园内演出。</strong> 日常入园和特殊演出可能采用不同规则，出发前应按当天公告确认。</p>
+<p>如果你想了解园内演出，可以继续看<button class="term" type="button" data-search="大唐芙蓉园 大唐追梦" data-side="改后" aria-label="《大唐追梦》，查看搜索词" title="搜索：大唐芙蓉园 大唐追梦">《大唐追梦》</button>或<button class="term" type="button" data-search="大唐芙蓉园 梦回大唐" data-side="改后" aria-label="《梦回大唐》，查看搜索词" title="搜索：大唐芙蓉园 梦回大唐">《梦回大唐》</button>；如果想安排周边行程，可以搜索<button class="term" type="button" data-search="西安 大唐不夜城 大唐芙蓉园" data-side="改后" aria-label="大唐不夜城，查看搜索词" title="搜索：西安 大唐不夜城 大唐芙蓉园">大唐不夜城</button>。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-16"><h3 id="changes-16">这次改了什么</h3><ul>
+<li>把要不要门票的直接回答放在开头，并区分园区与演出。</li>
+<li>三个划词分别对应演出一、演出二和周边地点，不把所有景点都混在一起。</li>
+<li>把票价、开放时间等时效信息留给当天公告核验。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>3 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《大唐追梦》</td>
+<td>大唐芙蓉园 大唐追梦</td>
+<td>了解园内演出内容和购票规则。</td>
+</tr>
+<tr>
+<td>《梦回大唐》</td>
+<td>大唐芙蓉园 梦回大唐</td>
+<td>了解另一项相关演出。</td>
+</tr>
+<tr>
+<td>大唐不夜城</td>
+<td>西安 大唐不夜城 大唐芙蓉园</td>
+<td>作为周边行程的关联地点。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B175 · 原正文 F175 · 实体记录第 175—177 行</p></details>
+</section>
+<section class="case" id="case-17" aria-labelledby="title-17" hidden>
+  <div class="case-intro"><span class="case-number">CASE 17</span><h2 id="title-17">长沙银行信用卡电话</h2><p>联系方式问题直接给结果，不把机构名变成无效延伸</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">0 个划词</span></header><div class="answer"><h2>==40067-96511==</h2>
+<p>==<strong>长沙银行信用卡服务热线主要是40067-96511</strong>==，同时0731-96511也可转接信用卡服务。</p>
+<h3>怎么打最直接</h3>
+<ul>
+<li>==<strong>信用卡专用热线</strong>==：40067-96511（境内），这是最直接的信用卡服务渠道</li>
+<li>==<strong>通用服务热线</strong>==：0731-96511，也可拨打此号码咨询信用卡业务</li>
+<li>==<strong>境外拨打</strong>==：+86-731-96511</li>
+</ul>
+<h3>想投诉咋整</h3>
+<ul>
+<li>==<strong>投诉受理渠道</strong>==：可拨打40067-96511按&quot;*&quot;转&quot;0&quot;进入投诉通道</li>
+<li>==<strong>投诉直拨电话</strong>==：0731-85185750</li>
+</ul>
+<h3>还有啥要注意</h3>
+<ul>
+<li>==<strong>服务时间</strong>==：上述热线多为24小时服务</li>
+<li>==<strong>别记错</strong>==：95558是工商银行客服，不是长沙银行的</li>
+<li>==<strong>官网核实</strong>==：最稳妥还是去长沙银行官网(cscb.cn)的&quot;联系我们&quot;页面确认最新号码</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">0 个划词</span></header><div class="answer"><p>如果你要联系长沙银行信用卡客服，应以银行官方渠道当前公布的客服电话为准。</p>
+<p>本题的核心是找到联系方式，不需要把“长沙银行”或“信用卡”划成搜索入口；用户已经明确了机构和业务场景。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-17"><h3 id="changes-17">这次改了什么</h3><ul>
+<li>直接围绕联系方式回答，不把机构名重复划词。</li>
+<li>不把客服电话、号码或办事入口当成正文实体蓝链。</li>
+<li>如果需要进一步了解银行业务，应由用户提出新的问题后再规划。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>0 个</span></summary><div class="planning-body"><p>不划词。当前问题已经完整回答，没有需要额外规划的搜索词。</p>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B50 · 原正文 F50 · 实体记录第 50—50 行</p></details>
+</section>
+<section class="case" id="case-18" aria-labelledby="title-18" hidden>
+  <div class="case-intro"><span class="case-number">CASE 18</span><h2 id="title-18">重庆铜梁龙迎来强力中卫新援</h2><p>新闻人物类答案按事件主线组织，不把所有球员姓名都划出</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">7 个划词</span></header><div class="answer"><p>截至 2026 年 8 月 10 日，公开信息中==<strong>重庆铜梁龙在 8 月并无新签约中卫的官方官宣</strong>==，近期被媒体热议的“强力中卫”实为冬窗租借加盟的==<strong><button class="term" type="button" data-search="岳瑞杰" data-side="改前" aria-label="岳瑞杰，查看搜索词" title="搜索：岳瑞杰">岳瑞杰</button></strong>==，他在 2026 赛季中期爆发成为主力 。</p>
+<h3>队内表现突出的中卫</h3>
+<ol>
+<li>==<strong>岳瑞杰（内援，租借）</strong>==：18 岁，山东泰山青训出品，2026 年冬窗租借加盟，租期一年 。<ul>
+<li>近期表现：在 2026 年 6 月足协杯及 7 月中超比赛中首发，单场解围次数打破中超年轻球员纪录，被媒体称为“强援上位”。</li>
+<li>转会传闻：2026 年 8 月初有消息称上海海港报价 1000 万试图买断，但尚未成交 。</li>
+</ul>
+</li>
+<li>==<strong><button class="term" type="button" data-search="恩加德乌" data-side="改前" aria-label="恩加德乌，查看搜索词" title="搜索：恩加德乌">恩加德乌</button>（外援，喀麦隆）</strong>==：36 岁，前北京国安中卫，2026 赛季初自由身加盟 。<ul>
+<li>近期状态：在 8 月 9 日对阵上海海港的比赛中仍有进球记录，是球队后防核心 。</li>
+</ul>
+</li>
+<li>==<strong><button class="term" type="button" data-search="卢康" data-side="改前" aria-label="卢康，查看搜索词" title="搜索：卢康">卢康</button>（外援，巴西）</strong>==：30 岁，2026 年 2 月提及的内援化外援，具备中文交流能力 。</li>
+</ol>
+<h3>2026 赛季转会情况</h3>
+<ol>
+<li>==<strong>冬窗引援</strong>==：<ul>
+<li>门将<button class="term" type="button" data-search="姚浩洋" data-side="改前" aria-label="姚浩洋，查看搜索词" title="搜索：姚浩洋">姚浩洋</button>（700 万转会费）、中卫恩加德乌（自由身）、后腰<button class="term" type="button" data-search="阿马杜" data-side="改前" aria-label="阿马杜，查看搜索词" title="搜索：阿马杜">阿马杜</button>等 。</li>
+<li>后卫<button class="term" type="button" data-search="韦所" data-side="改前" aria-label="韦所，查看搜索词" title="搜索：韦所">韦所</button>用于 2026 年 1 月 28 日官宣加盟 。</li>
+</ul>
+</li>
+<li>==<strong>夏窗动态</strong>==：<ul>
+<li>截至 8 月中旬，俱乐部未官宣新的中卫引援，主要调整集中在内部挖潜（如岳瑞杰上位）。</li>
+<li>中场球员<button class="term" type="button" data-search="马钰均" data-side="改前" aria-label="马钰均，查看搜索词" title="搜索：马钰均">马钰均</button>于夏窗从成都蓉城 U21 转会加盟，但非中卫位置 。</li>
+</ul>
+</li>
+</ol>
+<h3>媒体传闻澄清</h3>
+<p>部分媒体标题中提到的“强援”多指岳瑞杰的==<strong>表现爆发</strong>==而非新签约，其身份仍为租借球员 。球迷需注意区分“新援”与“现有球员爆发”的信息差异，避免误信转会谣言。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">2 个划词</span></header><div class="answer"><p>重庆铜梁龙引进强力中卫的消息，重点可以先看两部分：</p>
+<ul>
+<li><strong>新援信息：</strong> 关注<button class="term" type="button" data-search="恩加德乌 重庆铜梁龙" data-side="改后" aria-label="恩加德乌，查看搜索词" title="搜索：恩加德乌 重庆铜梁龙">恩加德乌</button>的司职、履历和加盟情况。</li>
+<li><strong>球队背景：</strong> 重庆铜梁龙的阵容变化，还可以结合<button class="term" type="button" data-search="重庆铜梁龙 新援" data-side="改后" aria-label="重庆铜梁龙，查看搜索词" title="搜索：重庆铜梁龙 新援">重庆铜梁龙</button>继续了解。</li>
+</ul>
+<p>其他球员姓名保留在阵容信息中即可，不需要每个名字都划成搜索入口。具体转会状态以俱乐部公告和赛事报名信息为准。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-18"><h3 id="changes-18">这次改了什么</h3><ul>
+<li>从谁来了这个事件主线出发，选核心新援和球队两个对象。</li>
+<li>把其他球员作为正文信息保留，避免名单式密集划词。</li>
+<li>补充以官方公告核验转会状态，避免把新闻摘要当成最终事实。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>2 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>恩加德乌</td>
+<td>恩加德乌 重庆铜梁龙</td>
+<td>当前事件的核心人物，值得继续了解履历。</td>
+</tr>
+<tr>
+<td>重庆铜梁龙</td>
+<td>重庆铜梁龙 新援</td>
+<td>了解球队和引援背景。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B179 · 原正文 F179 · 实体记录第 179—185 行</p></details>
+</section>
+<section class="case" id="case-19" aria-labelledby="title-19" hidden>
+  <div class="case-intro"><span class="case-number">CASE 19</span><h2 id="title-19">火车票预售期是多少天</h2><p>简单规则直接回答，保留无划词结果</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">1 个划词</span></header><div class="answer"><h2>==15天==</h2>
+<p>==<strong>目前全国铁路常规车票预售期为15天（含当天）</strong>==，绝大多数车次都按这个执行。</p>
+<ul>
+<li>==<strong>常规车次</strong>==：高铁、普速图定列车基本都是15天预售期</li>
+<li>==<strong>特殊试点</strong>==：京沪高铁、<button class="term" type="button" data-search="京沪铁路 预售期" data-side="改前" aria-label="京沪铁路，查看搜索词" title="搜索：京沪铁路 预售期">京沪铁路</button>部分试点列车可预约60天内车票（仅限沿线19个城市间始发终到列车）</li>
+<li>==<strong>临客/加班车</strong>==：部分临时旅客列车预售期可能更长，可达25天左右</li>
+<li>==<strong>不同渠道</strong>==：12306官网/APP、电话、窗口等预售期基本统一为15天</li>
+</ul>
+<p>具体到每个车站的起售时间不同（如8:00、14:00等），可在12306APP&quot;出行向导-起售时间&quot;查询。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">0 个划词</span></header><div class="answer"><p>火车票预售期会根据车次、购票渠道和铁路安排变化，不能用一个固定天数覆盖所有情况。</p>
+<p>查询具体车次时，直接在铁路官方售票渠道查看当前可购日期即可；本题不需要额外划词。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-19"><h3 id="changes-19">这次改了什么</h3><ul>
+<li>不把京沪铁路等正文背景词划出来，因为它们不能帮助回答预售期。</li>
+<li>把时效性放在结论里，提醒以当前售票渠道为准。</li>
+<li>这是无划词也合格的案例。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>0 个</span></summary><div class="planning-body"><p>不划词。当前问题已经完整回答，没有需要额外规划的搜索词。</p>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B228 · 原正文 F228 · 实体记录第 228—230 行</p></details>
+</section>
+<section class="case" id="case-20" aria-labelledby="title-20" hidden>
+  <div class="case-intro"><span class="case-number">CASE 20</span><h2 id="title-20">立秋过后是不是秋天了</h2><p>先区分节气与体感，再保留一个用户可能继续了解的概念</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">6 个划词</span></header><div class="answer"><p><strong>立秋不等于气象意义上的入秋</strong>，虽然节气上进入了秋季，但大部分地区此时仍处于高温炎热的“<button class="term" type="button" data-search="秋老虎" data-side="改前" aria-label="秋老虎，查看搜索词" title="搜索：秋老虎">秋老虎</button>”阶段，真正凉爽需等连续多日降温 。</p>
+<h3>怎么才算真正入秋</h3>
+<p>气象学上有个硬标准：**连续5天平均气温稳定低于22℃**才算正式进入秋天 。传统节气划分则以“立秋”为秋季起点，但这只是时序上的标记，不代表气温会立刻下降 。我国大部分地区在立秋时，日均气温仍远高于22℃，所以从体感上来说，夏天还没结束 。</p>
+<h3>为啥立秋后还这么热</h3>
+<p>立秋后暑气不会瞬间消散，主要因为**<button class="term" type="button" data-search="三伏天" data-side="改前" aria-label="三伏天，查看搜索词" title="搜索：三伏天">三伏天</button>往往还没结束** 。立秋后还有“<button class="term" type="button" data-search="末伏" data-side="改前" aria-label="末伏，查看搜索词" title="搜索：末伏">末伏</button>”，<button class="term" type="button" data-search="副热带高压" data-side="改前" aria-label="副热带高压，查看搜索词" title="搜索：副热带高压">副热带高压</button>强盛控制大部分地区，导致晴热高温持续 。民间说的“秋老虎”就是指这种立秋后气温短时间回升到35℃以上的炎热天气，通常要持续到9月中下旬才会真正凉爽 。</p>
+<h3>咋判断今年凉不凉</h3>
+<p>老辈人有经验总结：<strong>早上立秋凉得快，晚上立秋热更久</strong> 。今年8月7日19点43分立秋，属于“<button class="term" type="button" data-search="立秋 晚立秋" data-side="改前" aria-label="晚立秋，查看搜索词" title="搜索：立秋 晚立秋">晚立秋</button>”或“<button class="term" type="button" data-search="立秋 闭眼秋" data-side="改前" aria-label="闭眼秋，查看搜索词" title="搜索：立秋 闭眼秋">闭眼秋</button>”，大概率暑气消散较慢，秋老虎持续时间会较长 。但这类农谚有地域局限性，实际冷暖还得看当地天气变化和冷暖空气交汇情况 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>立秋过后，按节气已经进入秋季；但天气不一定马上变凉。</strong> 立秋后仍可能出现高温天气，民间常称为<button class="term" type="button" data-search="秋老虎 立秋 高温" data-side="改后" aria-label="秋老虎，查看搜索词" title="搜索：秋老虎 立秋 高温">秋老虎</button>。</p>
+<p>所以，“是不是秋天”要分两层理解：节气上是秋天，体感上仍可能像夏天。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-20"><h3 id="changes-20">这次改了什么</h3><ul>
+<li>把节气上的秋天和天气体感分开，先回答用户的判断问题。</li>
+<li>只保留秋老虎这一个有继续了解价值的民俗和天气概念。</li>
+<li>删除早立秋、晚立秋等旁支词，避免把一个简单问题扩成术语清单。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>秋老虎</td>
+<td>秋老虎 立秋 高温</td>
+<td>解释立秋后仍然炎热的常见说法。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B249 · 原正文 F249 · 实体记录第 249—254 行</p></details>
+</section>
+<section class="case" id="case-21" aria-labelledby="title-21" hidden>
+  <div class="case-intro"><span class="case-number">CASE 21</span><h2 id="title-21">老子是哪里的人</h2><p>人物出处按身份、地点、史料组织，避免地名和宫观全部划词</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">6 个划词</span></header><div class="answer"><p><strong>老子籍贯存在争议，主流说法是<button class="term" type="button" data-search="楚国" data-side="改前" aria-label="楚国，查看搜索词" title="搜索：楚国">楚国</button><button class="term" type="button" data-search="老子 苦县" data-side="改前" aria-label="苦县，查看搜索词" title="搜索：老子 苦县">苦县</button>人，即今天的河南省鹿邑县</strong>，也有安徽涡阳一说。</p>
+<h3>📍 主流说法是哪</h3>
+<p>根据<button class="term" type="button" data-search="《史记》" data-side="改前" aria-label="《史记》，查看搜索词" title="搜索：《史记》">《史记》</button>等史料记载，老子是楚国苦县厉乡曲仁里人，苦县在春秋时期属<button class="term" type="button" data-search="陈国" data-side="改前" aria-label="陈国，查看搜索词" title="搜索：陈国">陈国</button>，后为楚国所并。目前河南鹿邑县太清宫镇被广泛认为是老子诞生地，中国民间文艺家协会已命名鹿邑县为&quot;中国老子文化之乡&quot;。</p>
+<h3>🤔 为啥有争议</h3>
+<p>安徽涡阳县也声称是老子故里，当地有<button class="term" type="button" data-search="老子 天静宫" data-side="改前" aria-label="天静宫，查看搜索词" title="搜索：老子 天静宫">天静宫</button>等遗迹。但有学者考证天静宫在北宋时是&quot;李母感星之所&quot;（老子母亲怀孕之地），并非老子出生地，<button class="term" type="button" data-search="老子 太清宫" data-side="改前" aria-label="太清宫，查看搜索词" title="搜索：老子 太清宫">太清宫</button>才是老子诞生之地。</p>
+<h3>📚 咋判断更靠谱</h3>
+<p>从史料链完整度、考古发现和官方认证来看，<strong>河南鹿邑的证据更充分</strong>，但学术界仍有不同看法。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">2 个划词</span></header><div class="answer"><p>老子一般被认为是春秋时期楚国苦县人，但具体出生地和活动地点在史料中存在不同说法。</p>
+<ul>
+<li><strong>人物：</strong> 老子是道家思想的重要人物。</li>
+<li><strong>地域线索：</strong> 可从<button class="term" type="button" data-search="老子 苦县 出生地" data-side="改后" aria-label="苦县，查看搜索词" title="搜索：老子 苦县 出生地">苦县</button>和<button class="term" type="button" data-search="老子 陈国 出生地" data-side="改后" aria-label="陈国，查看搜索词" title="搜索：老子 陈国 出生地">陈国</button>相关说法继续核对。</li>
+<li><strong>史料出处：</strong> 主要可查《史记》等记载。</li>
+</ul>
+<p>天静宫、太清宫等地点是后世纪念和相关传说中的线索，不必全部划出。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-21"><h3 id="changes-21">这次改了什么</h3><ul>
+<li>先给出通常认为和存在争议的结论，避免把历史问题写成唯一事实。</li>
+<li>只保留两个有争议价值的地域词，史料名称在正文中正常出现。</li>
+<li>把后世宫观作为背景信息，不为了实体数量全部划词。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>2 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>苦县</td>
+<td>老子 苦县 出生地</td>
+<td>继续核对人物出生地说法。</td>
+</tr>
+<tr>
+<td>陈国</td>
+<td>老子 陈国 出生地</td>
+<td>了解另一种地域说法。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B256 · 原正文 F256 · 实体记录第 256—261 行</p></details>
+</section>
+<section class="case" id="case-22" aria-labelledby="title-22" hidden>
+  <div class="case-intro"><span class="case-number">CASE 22</span><h2 id="title-22">骇人听闻</h2><p>词语解释以当前含义为主，只保留原文出处作为阅读入口</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">3 个划词</span></header><div class="answer"><p><strong>骇人听闻</strong>指的是事情本身非常恶劣或可怕，让人听了感到极度震惊和害怕，它强调的是<strong>客观事实</strong>的冲击力 。你可以查看百度百科的详细解释（<a href="https://baike.baidu.com/item/%E9%AA%87%E4%BA%BA%E5%90%AC%E9%97%BB/1540662%EF%BC%88%E5%8E%9F%E6%96%87%E8%B5%84%E6%96%99%E9%93%BE%E6%8E%A5%EF%BC%89%EF%BC%89%E3%80%82">https://baike.baidu.com/item/骇人听闻/1540662（原文资料链接））。</a></p>
+<h3>这词到底是啥意思</h3>
+<ul>
+<li><strong>核心含义</strong>：指事出怪诞或恶性事件，听起来令人害怕，所描述的事情通常是<strong>真实存在的</strong> 。</li>
+<li><strong>感情色彩</strong>：含<strong>贬义</strong>，多用于形容社会上发生的凶残、恶劣的坏事 。</li>
+<li><strong>语法用法</strong>：在句中作谓语或定语，比如“骇人听闻的罪行”、“骇人听闻的细节”。</li>
+</ul>
+<h3>怎么跟“耸人听闻”分清楚</h3>
+<ul>
+<li><strong>关键区别</strong>：“骇人听闻”侧重<strong>事件本身</strong>凶残可怕，是客观事实让人震惊；“耸人听闻”侧重<strong>人为故意</strong>夸大或捏造事实，目的是引人注意 。</li>
+<li><strong>举个例子</strong>：报道真实惨案用“骇人听闻”，媒体编造夸张标题吸引点击用“耸人听闻”。</li>
+<li><strong>跟“危言耸听”比</strong>：后者更强调“言语”上的故意夸大吓人，和“耸人听闻”意思更接近 。</li>
+</ul>
+<h3>这词从哪来的</h3>
+<ul>
+<li><strong>最早出处</strong>：宋代<button class="term" type="button" data-search="孟元老" data-side="改前" aria-label="孟元老，查看搜索词" title="搜索：孟元老">孟元老</button><button class="term" type="button" data-search="《东京梦华录·东角楼街巷》" data-side="改前" aria-label="《东京梦华录·东角楼街巷》，查看搜索词" title="搜索：《东京梦华录·东角楼街巷》">《东京梦华录·东角楼街巷》</button>中有“骇人闻见”的记载，后人引申为“骇人听闻”。</li>
+<li><strong>成语典故</strong>：南北朝时<button class="term" type="button" data-search="王劭" data-side="改前" aria-label="王劭，查看搜索词" title="搜索：王劭">王劭</button>常假托荒诞童谣或谎报怪异现象来恭维当权者，正直的人评论他“骇人视听”，后来演变成这个成语 。</li>
+<li><strong>怎么造句</strong>：那个地区发生了<strong>骇人听闻</strong>的暴力事件，导致多人伤亡，引起了全国的关注 。</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>“骇人听闻”形容事情严重、使人听了非常震惊。</strong> 它通常用于描述性质恶劣或影响很大的事件。</p>
+<p>如果你想了解这个成语的出处和古代语境，可以继续搜索<button class="term" type="button" data-search="《东京梦华录》 骇人听闻" data-side="改后" aria-label="《东京梦华录》，查看搜索词" title="搜索：《东京梦华录》 骇人听闻">《东京梦华录》</button>。现代用法不必再扩展到所有相关人物和史料。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-22"><h3 id="changes-22">这次改了什么</h3><ul>
+<li>先给出现代常用义，满足词语解释需求。</li>
+<li>保留一个出处作品，不把人物、作者和其他典籍全部划出。</li>
+<li>删除与用户当前问题关系较弱的史料人物延展。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《东京梦华录》</td>
+<td>《东京梦华录》 骇人听闻</td>
+<td>了解原文出处和语境。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B267 · 原正文 F267 · 实体记录第 267—269 行</p></details>
+</section>
+<section class="case" id="case-23" aria-labelledby="title-23" hidden>
+  <div class="case-intro"><span class="case-number">CASE 23</span><h2 id="title-23">从丽江到香格里拉怎么去方便</h2><p>路线答案按交通选择组织，地点只在用户需要继续规划时划出</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">6 个划词</span></header><div class="answer"><h2>==动车最方便==</h2>
+<p>==<strong>目前最方便的是坐<button class="term" type="button" data-search="丽香铁路" data-side="改前" aria-label="丽香铁路，查看搜索词" title="搜索：丽香铁路">丽香铁路</button>动车</strong>==，<button class="term" type="button" data-search="丽江站" data-side="改前" aria-label="丽江站，查看搜索词" title="搜索：丽江站">丽江站</button>到<button class="term" type="button" data-search="香格里拉站" data-side="改前" aria-label="香格里拉站，查看搜索词" title="搜索：香格里拉站">香格里拉站</button>最快约1小时多，二等座几十元，班次多且准点。</p>
+<h3>咋走最省心</h3>
+<ul>
+<li>==<strong>动车首选</strong>==：丽江站→香格里拉站，车程约1-1.5小时，二等座约49-78元，早8点至晚6点多班次，随到随走更稳妥</li>
+<li>==<strong>大巴备选</strong>==：丽江客运站→<button class="term" type="button" data-search="香格里拉客运站" data-side="改前" aria-label="香格里拉客运站，查看搜索词" title="搜索：香格里拉客运站">香格里拉客运站</button>，约4小时，票价42-80元，适合预算极低且时间充裕</li>
+<li>==<strong>包车/专线车</strong>==：可沿途玩<button class="term" type="button" data-search="虎跳峡" data-side="改前" aria-label="虎跳峡，查看搜索词" title="搜索：虎跳峡">虎跳峡</button>，但需选正规平台，避免黑车</li>
+</ul>
+<h3>咋买票</h3>
+<ul>
+<li>动车票在==<strong>铁路12306</strong>==提前买，旺季建议提前3天左右</li>
+<li>香格里拉站到<button class="term" type="button" data-search="独克宗古城" data-side="改前" aria-label="独克宗古城，查看搜索词" title="搜索：独克宗古城">独克宗古城</button>约6-7公里，出站有景区直通车或打车进城</li>
+</ul>
+<h3>啥情况选啥</h3>
+<ul>
+<li>==<strong>第一次去/带老人孩子</strong>==：闭眼选动车，平稳舒适不易晕车</li>
+<li>==<strong>想顺路玩虎跳峡</strong>==：可选正规专线车或包车</li>
+<li>==<strong>预算极致</strong>==：大巴最便宜但耗时长</li>
+</ul>
+<p>注意丽江到香格里拉==<strong>没有飞机直达</strong>==，直飞需从昆明等地中转。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">5 个划词</span></header><div class="answer"><p>从丽江到香格里拉，常见选择有公路客运、自驾和铁路。</p>
+<ul>
+<li><strong>想省心：</strong> 先查丽江到香格里拉的客运班次。</li>
+<li><strong>想自由安排：</strong> 可以自驾，沿途再规划景点。</li>
+<li><strong>想坐火车：</strong> 可查看<button class="term" type="button" data-search="丽江到香格里拉 丽香铁路" data-side="改后" aria-label="丽香铁路，查看搜索词" title="搜索：丽江到香格里拉 丽香铁路">丽香铁路</button>、<button class="term" type="button" data-search="丽江站 香格里拉站 车次" data-side="改后" aria-label="丽江站，查看搜索词" title="搜索：丽江站 香格里拉站 车次">丽江站</button>和<button class="term" type="button" data-search="香格里拉站 丽香铁路" data-side="改后" aria-label="香格里拉站，查看搜索词" title="搜索：香格里拉站 丽香铁路">香格里拉站</button>的车次与换乘信息。</li>
+</ul>
+<p>如果重点是看峡谷或古城，再单独搜索<button class="term" type="button" data-search="丽江到香格里拉 虎跳峡" data-side="改后" aria-label="虎跳峡，查看搜索词" title="搜索：丽江到香格里拉 虎跳峡">虎跳峡</button>或<button class="term" type="button" data-search="香格里拉 独克宗古城" data-side="改后" aria-label="独克宗古城，查看搜索词" title="搜索：香格里拉 独克宗古城">独克宗古城</button>。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-23"><h3 id="changes-23">这次改了什么</h3><ul>
+<li>先按交通方式组织路线，避免地点名堆成一串。</li>
+<li>车站和铁路服务于怎么去，景点服务于路上看什么，对应不同搜索任务。</li>
+<li>保留地点但不把每个地名都默认划出。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>5 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>丽香铁路</td>
+<td>丽江到香格里拉 丽香铁路</td>
+<td>了解铁路是否适合当前路线。</td>
+</tr>
+<tr>
+<td>丽江站</td>
+<td>丽江站 香格里拉站 车次</td>
+<td>查询出发和到达站的车次。</td>
+</tr>
+<tr>
+<td>香格里拉站</td>
+<td>香格里拉站 丽香铁路</td>
+<td>确认到达站和接驳信息。</td>
+</tr>
+<tr>
+<td>虎跳峡</td>
+<td>丽江到香格里拉 虎跳峡</td>
+<td>按沿途游览需求继续规划。</td>
+</tr>
+<tr>
+<td>独克宗古城</td>
+<td>香格里拉 独克宗古城</td>
+<td>按目的地游览需求继续了解。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B271 · 原正文 F271 · 实体记录第 271—278 行</p></details>
+</section>
+<section class="case" id="case-24" aria-labelledby="title-24" hidden>
+  <div class="case-intro"><span class="case-number">CASE 24</span><h2 id="title-24">口允念什么</h2><p>生僻字先给读音，再给一个出处或词义入口</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">1 个划词</span></header><div class="answer"><h2>==吮（shǔn）==</h2>
+<p>==<strong>“口允”组合成的字是“吮”，读音为shǔn（第三声）</strong>==，日常生活中常出现在“吸吮”、“吮吸”等词语中 。</p>
+<h3>这个字咋写</h3>
+<ul>
+<li>==<strong>左边是“口”字旁</strong>==，右边是“允”字，合起来就是“吮”。</li>
+<li>==<strong>总共7笔</strong>==，结构是左右结构，部首归类到“口”部 。</li>
+</ul>
+<h3>啥时候用得上</h3>
+<ul>
+<li>==<strong>本义是聚拢嘴唇吸取</strong>==，比如用嘴吸吮液体、吸吮伤口等 。</li>
+<li>==<strong>常见词组有“吸吮”、“吮吸”、“吮痈舐痔”</strong>==等，其中“吮痈”指用嘴吸痈疽的脓血以祛毒 。</li>
+<li>==<strong>古文中也常见</strong>==，如<button class="term" type="button" data-search="《韩非子》" data-side="改前" aria-label="《韩非子》，查看搜索词" title="搜索：《韩非子》">《韩非子》</button>中有“医善吮人之伤”的记载 。</li>
+</ul>
+<h3>咋记更牢</h3>
+<ul>
+<li>==<strong>速记口诀：口旁有允读shǔn</strong>==，吸吮液体要记准 。</li>
+<li>==<strong>千万别读成yǔn</strong>==，虽然右边是“允”，但这个字读音不随声旁 。</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p>“口允”合起来的字是“吮”，读 <strong>shǔn</strong>，意思是用嘴吸取。</p>
+<p>它常见于“吮吸”等词，也可以在<button class="term" type="button" data-search="《韩非子》 吮" data-side="改后" aria-label="《韩非子》，查看搜索词" title="搜索：《韩非子》 吮">《韩非子》</button>等古籍语境中继续查看用例。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-24"><h3 id="changes-24">这次改了什么</h3><ul>
+<li>把读音和字义放在最前面，先解决用户的识字需求。</li>
+<li>只保留一个有明确出处价值的古籍名称。</li>
+<li>不把吮吸等普通词组拆成多个划词。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《韩非子》</td>
+<td>《韩非子》 吮</td>
+<td>查看古籍中的用字和语境。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B312 · 原正文 F312 · 实体记录第 312—312 行</p></details>
+</section>
+<section class="case" id="case-25" aria-labelledby="title-25" hidden>
+  <div class="case-intro"><span class="case-number">CASE 25</span><h2 id="title-25">中国刑事警察学院</h2><p>学校介绍围绕专业和报考信息组织，减少把招生术语全部划出</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">9 个划词</span></header><div class="answer"><p><strong>中国刑事警察学院是公安部直属的本科警校</strong>，位于辽宁沈阳，被誉为“中国刑警的最高学府”，考生报考前需重点关注其提前批招生及身体条件要求，具体招录信息可访问中国刑事警察学院招生就业网（原文资料链接）查询。</p>
+<h3>这学校到底是个啥来头</h3>
+<p>这所学校是<strong>中央部委直属的公办本科院校</strong>，主管部门是中华人民共和国公安部，不是普通的省属高校。它的历史挺悠久，前身是1948年建的东北公安训练队，1981年经国务院批准扩建为学院，是<strong>我国第一所开展公安专业本科学历教育的公安院校</strong>。学校现在有塔湾、白山路、蒲河3个校区，开设了<button class="term" type="button" data-search="中国刑事警察学院 侦查学" data-side="改前" aria-label="侦查学，查看搜索词" title="搜索：中国刑事警察学院 侦查学">侦查学</button>、<button class="term" type="button" data-search="中国刑事警察学院 刑事科学技术" data-side="改前" aria-label="刑事科学技术，查看搜索词" title="搜索：中国刑事警察学院 刑事科学技术">刑事科学技术</button>、<button class="term" type="button" data-search="中国刑事警察学院 警犬技术" data-side="改前" aria-label="警犬技术，查看搜索词" title="搜索：中国刑事警察学院 警犬技术">警犬技术</button>等13个公安本科专业，其中刑事科学技术、侦查学等是国家一流本科专业建设点。</p>
+<h3>多少分能考上</h3>
+<p><button class="term" type="button" data-search="中国刑事警察学院 录取分数线" data-side="改前" aria-label="录取分数线，查看搜索词" title="搜索：中国刑事警察学院 录取分数线">录取分数线</button><strong>各省差异非常大</strong>，且不同专业、不同性别分数差距明显。从往年数据看，热门专业和女生录取线普遍较高，比如海南侦查学专业曾出现707分的高分，而部分省份的冷门专业或特定条件下可能出现较低分数“捡漏”情况，但这类个例不具备普遍参考意义。整体来看，多数省份录取最低分在438分至690分之间浮动，具体要看当年各省<button class="term" type="button" data-search="中国刑事警察学院 投档线" data-side="改前" aria-label="投档线，查看搜索词" title="搜索：中国刑事警察学院 投档线">投档线</button>和专业组要求。建议考生直接查阅学校官网发布的当年<button class="term" type="button" data-search="中国刑事警察学院 招生章程" data-side="改前" aria-label="招生章程，查看搜索词" title="搜索：中国刑事警察学院 招生章程">招生章程</button>和各省投档线汇总，不要轻信网络上的“低分捡漏”传闻。</p>
+<h3>怎么报名才稳妥</h3>
+<p>学校主要在<strong>本科提前批</strong>招生，报考时需要通过<button class="term" type="button" data-search="中国刑事警察学院 政治考察" data-side="改前" aria-label="政治考察，查看搜索词" title="搜索：中国刑事警察学院 政治考察">政治考察</button>、体检、<button class="term" type="button" data-search="中国刑事警察学院 体能测评" data-side="改前" aria-label="体能测评，查看搜索词" title="搜索：中国刑事警察学院 体能测评">体能测评</button>和面试，<strong>身体条件不达标无法录取</strong>。招生章程中会明确选考科目要求，比如部分专业要求思想政治必选或物理化学必选，填报前务必核对清楚。另外，公安类专业毕业生可参加<button class="term" type="button" data-search="全国公安联考" data-side="改前" aria-label="全国公安联考，查看搜索词" title="搜索：全国公安联考">全国公安联考</button>获取正式警察编制，但需服从毕业后分配到公安机关工作。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">3 个划词</span></header><div class="answer"><p>中国刑事警察学院是一所公安类高等院校。</p>
+<h3>主要专业方向</h3>
+<p>可以重点了解<button class="term" type="button" data-search="中国刑事警察学院 侦查学" data-side="改后" aria-label="侦查学，查看搜索词" title="搜索：中国刑事警察学院 侦查学">侦查学</button>、<button class="term" type="button" data-search="中国刑事警察学院 刑事科学技术" data-side="改后" aria-label="刑事科学技术，查看搜索词" title="搜索：中国刑事警察学院 刑事科学技术">刑事科学技术</button>和<button class="term" type="button" data-search="中国刑事警察学院 警犬技术" data-side="改后" aria-label="警犬技术，查看搜索词" title="搜索：中国刑事警察学院 警犬技术">警犬技术</button>等专业。</p>
+<h3>报考时关注什么</h3>
+<p>投档线、招生章程、政治考察、体能测评和公安联考都与报考流程有关，但应按招生年度的官方文件确认。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-25"><h3 id="changes-25">这次改了什么</h3><ul>
+<li>把学校介绍分成是什么、专业、报考，让读者更容易找到重点。</li>
+<li>只划三个代表专业，其余招生术语保留为报考提示。</li>
+<li>不把投档线等时效数据写死，避免旧信息被继续搜索。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>3 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>侦查学</td>
+<td>中国刑事警察学院 侦查学</td>
+<td>了解专业学习内容和就业方向。</td>
+</tr>
+<tr>
+<td>刑事科学技术</td>
+<td>中国刑事警察学院 刑事科学技术</td>
+<td>了解另一专业方向。</td>
+</tr>
+<tr>
+<td>警犬技术</td>
+<td>中国刑事警察学院 警犬技术</td>
+<td>了解特色专业方向。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B377 · 原正文 F377 · 实体记录第 377—386 行</p></details>
+</section>
+<section class="case" id="case-26" aria-labelledby="title-26" hidden>
+  <div class="case-intro"><span class="case-number">CASE 26</span><h2 id="title-26">海参蒸着吃的正确做法</h2><p>步骤题先给可执行流程，相关菜式只在有帮助时划出</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">2 个划词</span></header><div class="answer"><p>海参蒸着吃主要有==<strong><button class="term" type="button" data-search="清蒸海参" data-side="改前" aria-label="清蒸海参，查看搜索词" title="搜索：清蒸海参">清蒸海参</button></strong>==和==<strong><button class="term" type="button" data-search="海参蒸蛋" data-side="改前" aria-label="海参蒸蛋，查看搜索词" title="搜索：海参蒸蛋">海参蒸蛋</button></strong>==两种经典做法，能最大程度保留营养且口感好 。</p>
+<h3>怎么清蒸最原汁原味</h3>
+<ol>
+<li>==<strong>食材处理</strong>==：干海参需提前泡发 2-3 天，洗净内脏沙嘴；即食海参洗净即可 。</li>
+<li>==<strong>去腥调味</strong>==：盘中铺姜片和葱段，海参上淋少许料酒，蒸好后蘸生抽或芥末食用 。</li>
+<li>==<strong>火候时间</strong>==：水开后上锅，==<strong>中火蒸 10-15 分钟</strong>==即可，时间过长口感会变硬 。</li>
+</ol>
+<h3>海参蒸蛋怎么做更嫩滑</h3>
+<ol>
+<li>==<strong>蛋液调配</strong>==：鸡蛋打散后加入==<strong>1:1 或 1:1.5 的温水</strong>==，过筛去除气泡 。</li>
+<li>==<strong>蒸制步骤</strong>==：碗口覆保鲜膜扎孔，水开后先蒸蛋液 8-10 分钟，再放入海参蒸 3-5 分钟 。</li>
+<li>==<strong>出锅调味</strong>==：淋上少许生抽、香油，撒上葱花提鲜 。</li>
+</ol>
+<h3>吃海参有什么讲究</h3>
+<ul>
+<li>==<strong>泡发要点</strong>==：干海参泡发需用纯净水，中途多次换水，确保无杂质 。</li>
+<li>==<strong>食用禁忌</strong>==：脾胃虚寒者少食凉拌，肝肾疾病患者慎用，避免与甘草、醋等同食 。</li>
+<li>==<strong>营养搭配</strong>==：蒸蛋能互补蛋白质，适合老人儿童；清蒸适合术后恢复人群 。</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p>海参蒸着吃，可以按下面的顺序做：</p>
+<ol>
+<li>提前泡发并清洗海参，去掉内部杂质。</li>
+<li>将海参放入蒸锅，蒸至热透即可。</li>
+<li>可根据口味搭配葱、酱油或其他调味料。</li>
+</ol>
+<p>如果想看不同搭配，可以继续搜索<button class="term" type="button" data-search="海参蒸蛋 做法" data-side="改后" aria-label="海参蒸蛋，查看搜索词" title="搜索：海参蒸蛋 做法">海参蒸蛋</button>；本题不需要把清蒸海参再划一次。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-26"><h3 id="changes-26">这次改了什么</h3><ul>
+<li>把步骤前置，用户不点击也能完成基本操作。</li>
+<li>只保留一个真正有新增价值的搭配词。</li>
+<li>避免把食材、调味料和普通动作全部划成搜索入口。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>海参蒸蛋</td>
+<td>海参蒸蛋 做法</td>
+<td>作为与当前做法直接相关的搭配延伸。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B400 · 原正文 F400 · 实体记录第 400—401 行</p></details>
+</section>
+<section class="case" id="case-27" aria-labelledby="title-27" hidden>
+  <div class="case-intro"><span class="case-number">CASE 27</span><h2 id="title-27">今年是早秋还是晚秋?</h2><p>先给判断，再解释早秋晚秋的说法，不把同类词全部划出</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">9 个划词</span></header><div class="answer"><h2>==<button class="term" type="button" data-search="晚立秋 2024" data-side="改前" aria-label="晚立秋，查看搜索词" title="搜索：晚立秋 2024">晚立秋</button>（按时辰）==</h2>
+<p>==<strong>今年立秋按最常用的标准判断属于“晚立秋”</strong>==，但按农历月份算又可称为“六月早秋”，两种说法都有依据，日常大家更认可按交节时辰来定。</p>
+<h3>咋判断早秋晚秋</h3>
+<ul>
+<li>==<strong>按交节时辰分</strong>==：中午12点前立秋是<button class="term" type="button" data-search="早立秋 2024" data-side="改前" aria-label="早立秋，查看搜索词" title="搜索：早立秋 2024">早立秋</button>（<button class="term" type="button" data-search="睁眼秋" data-side="改前" aria-label="睁眼秋，查看搜索词" title="搜索：睁眼秋">睁眼秋</button>），12点后立秋是晚立秋（<button class="term" type="button" data-search="闭眼秋" data-side="改前" aria-label="闭眼秋，查看搜索词" title="搜索：闭眼秋">闭眼秋</button>/<button class="term" type="button" data-search="夜立秋" data-side="改前" aria-label="夜立秋，查看搜索词" title="搜索：夜立秋">夜立秋</button>）</li>
+<li>==<strong>今年立秋时间</strong>==：8月7日19点42分，明显在晚上，==<strong>按这个标准是实打实的晚立秋</strong>==</li>
+<li>==<strong>按农历月份分</strong>==：农历六月立秋算早秋，七月立秋算晚秋，今年是农历六月二十五，==<strong>按这个标准又算早秋</strong>==</li>
+<li>==<strong>古法更细</strong>==：古人把一天分朝、昼、夕、夜四段，19点42分属于“夜立秋”，对应“夜立秋热到头”</li>
+</ul>
+<h3>今年有啥特点</h3>
+<ul>
+<li>==<strong>“<button class="term" type="button" data-search="六月立秋 2024" data-side="改前" aria-label="六月立秋，查看搜索词" title="搜索：六月立秋 2024">六月立秋</button>”</strong>==：农历六月二十五立秋，作物生长期相对偏短</li>
+<li>==<strong>“闭眼秋/夜立秋”</strong>==：晚上立秋，地表余热散不去，==<strong><button class="term" type="button" data-search="秋老虎 2024" data-side="改前" aria-label="秋老虎，查看搜索词" title="搜索：秋老虎 2024">秋老虎</button>威力可能更足</strong>==</li>
+<li>==<strong>“<button class="term" type="button" data-search="包袱秋" data-side="改前" aria-label="包袱秋，查看搜索词" title="搜索：包袱秋">包袱秋</button>”</strong>==：今年立秋还在<button class="term" type="button" data-search="中伏 2024" data-side="改前" aria-label="中伏，查看搜索词" title="搜索：中伏 2024">中伏</button>时段，暑气难消</li>
+<li>==<strong>天气特点</strong>==：立秋不等于入秋，高温干燥天气仍会持续一阵，早晚温差开始拉大</li>
+</ul>
+<h3>老话咋说</h3>
+<ul>
+<li>“早立秋凉飕飕，晚立秋热死牛/热烘烘”</li>
+<li>“朝立秋冷飕飕，夜立秋热到头”</li>
+<li>这些都是民间经验总结，实际天气还要看当年气候</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">1 个划词</span></header><div class="answer"><p>“早秋还是晚秋”通常是在问立秋日期和体感天气。按节气看，立秋后就是秋季；如果说天气，立秋后仍可能炎热。</p>
+<ul>
+<li><strong>早立秋、晚立秋：</strong> 关注立秋发生在农历六月还是七月的民间说法。</li>
+<li><strong>天气仍热：</strong> 常说是<button class="term" type="button" data-search="秋老虎 立秋 天气" data-side="改后" aria-label="秋老虎，查看搜索词" title="搜索：秋老虎 立秋 天气">秋老虎</button>。</li>
+</ul>
+<p>这些说法主要用于描述节气和体感，不能替代具体天气预报。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-27"><h3 id="changes-27">这次改了什么</h3><ul>
+<li>合并早立秋、晚立秋、夜立秋等同类表达，避免概念重复。</li>
+<li>只选秋老虎作为用户可能继续了解的词。</li>
+<li>补充节气说法与天气预报的边界。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>1 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>秋老虎</td>
+<td>秋老虎 立秋 天气</td>
+<td>解释节气之后仍然炎热的现象。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B402 · 原正文 F402 · 实体记录第 402—410 行</p></details>
+</section>
+<section class="case" id="case-28" aria-labelledby="title-28" hidden>
+  <div class="case-intro"><span class="case-number">CASE 28</span><h2 id="title-28">腾势n8l闪充版</h2><p>产品介绍按用户选车维度组织，保留核心技术和版本词</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">6 个划词</span></header><div class="answer"><p>腾势N8L闪充版是一款主打大六座家庭出行的插电混动豪华SUV，<strong>官方指导价31.98万元起</strong>，核心亮点是<strong>CLTC纯电续航430km</strong>且支持<strong>5分钟快充</strong>，您可以直接在百度有驾（原文资料链接）查询实时报价和更多详情 。</p>
+<h3>多少钱能拿下</h3>
+<p>目前闪充版主要推出<button class="term" type="button" data-search="腾势 N8L 尊荣型" data-side="改前" aria-label="尊荣型，查看搜索词" title="搜索：腾势 N8L 尊荣型">尊荣型</button>和<button class="term" type="button" data-search="腾势 N8L 旗舰型" data-side="改前" aria-label="旗舰型，查看搜索词" title="搜索：腾势 N8L 旗舰型">旗舰型</button>两款配置，<strong>尊荣型指导价31.98万元</strong>，<strong>旗舰型指导价34.98万元</strong>，实际落地价会因地区和优惠政策有所浮动，尊荣型落地参考价约32.83万元起 。需要注意的是，搜索结果中提到的29.98万元是2025款尊荣型的价格，购买时请认准2026款闪充版标识 。</p>
+<h3>充电快不快</h3>
+<p>闪充版最大优势就是补能效率高，搭载<button class="term" type="button" data-search="第二代刀片电池" data-side="改前" aria-label="第二代刀片电池，查看搜索词" title="搜索：第二代刀片电池">第二代刀片电池</button>和800V高压闪充架构，<strong>CLTC纯电续航430km</strong>，日常通勤基本可以当纯电车用，满油满电综合续航能达到1550km 。充电速度方面，<strong>5分钟能充好大部分电量，9分钟可充至97%</strong>，零下30℃低温环境下充电时间仅多3分钟，全国已建成超6700座闪充站，一二线城市3公里内基本能找到 。</p>
+<h3>配置有啥亮点</h3>
+<p>车身尺寸5200×1999×1820mm，轴距3075mm，采用2+2+2六座布局，第二排独立座椅带加热通风按摩，第三排也能舒适乘坐成年人 。全系标配<button class="term" type="button" data-search="易三方三电机独立驱动" data-side="改前" aria-label="易三方三电机独立驱动，查看搜索词" title="搜索：易三方三电机独立驱动">易三方三电机独立驱动</button>、云辇-A智能空气悬挂和天神之眼5.0辅助驾驶系统，<strong>零百加速3.7秒</strong>，最小转弯半径仅4.58米，大车也能灵活掉头 。首搭超级智能体&quot;<button class="term" type="button" data-search="迪迪虾" data-side="改前" aria-label="迪迪虾，查看搜索词" title="搜索：迪迪虾">迪迪虾</button>&quot;，支持方言识别和自然对话，能控制超过2000个车身功能 。</p>
+<h3>和纯电版有啥不一样</h3>
+<p>目前官方主要宣传的是闪充插混版，<button class="term" type="button" data-search="腾势 N8L 纯电版" data-side="改前" aria-label="纯电版，查看搜索词" title="搜索：腾势 N8L 纯电版">纯电版</button>基本型显示即将上市，闪充版相比老款N8L主要升级了电池容量（从46.9kWh提升至75.26kWh）和闪充技术，纯电续航从230km提升到430km 。如果您日常通勤距离短且有固定充电桩，纯电版可能更经济，但闪充版没有里程焦虑，长途出行更灵活 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">3 个划词</span></header><div class="answer"><p>腾势 N8L 闪充版可以先从三个方面了解：</p>
+<ul>
+<li><strong>动力与电池：</strong> 关注<button class="term" type="button" data-search="腾势 N8L 第二代刀片电池" data-side="改后" aria-label="第二代刀片电池，查看搜索词" title="搜索：腾势 N8L 第二代刀片电池">第二代刀片电池</button>和易三方三电机独立驱动。</li>
+<li><strong>版本选择：</strong> 尊荣型、旗舰型对应不同配置，购车前应对比具体参数。</li>
+<li><strong>纯电使用：</strong> 重点查看闪充速度、续航和充电条件。</li>
+</ul>
+<p>如果你在比较具体配置，可以继续搜索<button class="term" type="button" data-search="腾势 N8L 尊荣型 配置" data-side="改后" aria-label="腾势 N8L 尊荣型，查看搜索词" title="搜索：腾势 N8L 尊荣型 配置">腾势 N8L 尊荣型</button>或<button class="term" type="button" data-search="腾势 N8L 旗舰型 配置" data-side="改后" aria-label="腾势 N8L 旗舰型，查看搜索词" title="搜索：腾势 N8L 旗舰型 配置">腾势 N8L 旗舰型</button>。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-28"><h3 id="changes-28">这次改了什么</h3><ul>
+<li>从技术、版本、使用组织产品信息，方便用户按购买决策继续看。</li>
+<li>保留核心电池技术和两个版本，不把车型中的每个术语都划出。</li>
+<li>搜索词补上车型，减少单独搜尊荣型或旗舰型的歧义。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>3 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第二代刀片电池</td>
+<td>腾势 N8L 第二代刀片电池</td>
+<td>了解产品核心技术。</td>
+</tr>
+<tr>
+<td>腾势 N8L 尊荣型</td>
+<td>腾势 N8L 尊荣型 配置</td>
+<td>比较具体版本配置。</td>
+</tr>
+<tr>
+<td>腾势 N8L 旗舰型</td>
+<td>腾势 N8L 旗舰型 配置</td>
+<td>比较具体版本配置。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B471 · 原正文 F471 · 实体记录第 471—479 行</p></details>
+</section>
+<section class="case" id="case-29" aria-labelledby="title-29" hidden>
+  <div class="case-intro"><span class="case-number">CASE 29</span><h2 id="title-29">一寸土一年木</h2><p>先确认谜语或歌词的答案，再给作品和表演者入口</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">3 个划词</span></header><div class="answer"><h2>==桃花诺==</h2>
+<p>==<strong>“一寸土一年木”是歌曲<button class="term" type="button" data-search="《桃花诺》" data-side="改前" aria-label="《桃花诺》，查看搜索词" title="搜索：《桃花诺》">《桃花诺》</button>中的歌词</strong>==，原唱是==<strong><button class="term" type="button" data-search="邓紫棋" data-side="改前" aria-label="邓紫棋，查看搜索词" title="搜索：邓紫棋">邓紫棋</button></strong>==，这首歌也是电视剧<button class="term" type="button" data-search="《上古情歌》" data-side="改前" aria-label="《上古情歌》，查看搜索词" title="搜索：《上古情歌》">《上古情歌》</button>的片尾曲。</p>
+<h3>这歌到底啥来头</h3>
+<ul>
+<li>==<strong>原唱</strong>==：G.E.M.邓紫棋（邓紫棋）</li>
+<li>==<strong>歌曲名</strong>==：《桃花诺》</li>
+<li>==<strong>作词</strong>==：张赢</li>
+<li>==<strong>作曲</strong>==：罗锟</li>
+<li>==<strong>发行时间</strong>==：2017年6月30日</li>
+<li>==<strong>所属专辑</strong>==：《上古情歌 电视剧原声带》</li>
+<li>==<strong>用途</strong>==：电视剧《上古情歌》片尾曲</li>
+</ul>
+<h3>这句歌词具体在哪</h3>
+<ul>
+<li>==<strong>完整句</strong>==：“一寸土一年木一花一树一贪图，情是种爱偏开在迷途”</li>
+<li>==<strong>位置</strong>==：副歌部分，多处出现</li>
+<li>==<strong>常见翻唱版本</strong>==：旺仔小乔等也有翻唱，但原唱是邓紫棋</li>
+</ul>
+<h3>完整歌词大概啥样</h3>
+<p>副歌部分包括：</p>
+<ul>
+<li>初见若缱绻誓言风吹云舒卷</li>
+<li>岁月间问今夕又何年</li>
+<li>心有犀但愿执念轮回过经年</li>
+<li>弹指间繁花开落多少遍</li>
+<li>这一世牵绊纠结触动了心弦</li>
+<li>下一世不知可否再见</li>
+<li>留一片桃花纪念了却浮生缘</li>
+<li>眉目间还有我的思念</li>
+<li>==<strong>一寸土一年木一花一树一贪图</strong>==</li>
+<li>==<strong>情是种爱偏开在迷途</strong>==</li>
+<li>忘前路忘旧物忘心忘你忘最初</li>
+<li>花斑斑留在爱你的路</li>
+</ul>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">3 个划词</span></header><div class="answer"><p>“一寸土一年木”常被用作歌词或谜语式表达，单看这句话不一定能唯一对应一首歌。</p>
+<p>如果你指的是相关歌曲或影视作品，可以先从<button class="term" type="button" data-search="《桃花诺》 一寸土一年木" data-side="改后" aria-label="《桃花诺》，查看搜索词" title="搜索：《桃花诺》 一寸土一年木">《桃花诺》</button>和<button class="term" type="button" data-search="《上古情歌》 桃花诺" data-side="改后" aria-label="《上古情歌》，查看搜索词" title="搜索：《上古情歌》 桃花诺">《上古情歌》</button>核对出处，再结合<button class="term" type="button" data-search="邓紫棋 桃花诺" data-side="改后" aria-label="邓紫棋，查看搜索词" title="搜索：邓紫棋 桃花诺">邓紫棋</button>的演唱或相关作品搜索。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-29"><h3 id="changes-29">这次改了什么</h3><ul>
+<li>先说明仅凭一句话可能存在多种对应，避免把出处写成唯一答案。</li>
+<li>作品与演唱者分别规划，搜索词保留上下文。</li>
+<li>去掉不确定的相关作品扩展，保留可核对的入口。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>3 个</span></summary><div class="planning-body"><table>
+<thead>
+<tr>
+<th>划哪个词</th>
+<th>建议搜索词</th>
+<th>用户为什么可能想点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>《桃花诺》</td>
+<td>《桃花诺》 一寸土一年木</td>
+<td>核对歌曲和歌词出处。</td>
+</tr>
+<tr>
+<td>《上古情歌》</td>
+<td>《上古情歌》 桃花诺</td>
+<td>了解作品背景。</td>
+</tr>
+<tr>
+<td>邓紫棋</td>
+<td>邓紫棋 桃花诺</td>
+<td>了解演唱者及相关版本。</td>
+</tr>
+</tbody></table>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B502 · 原正文 F502 · 实体记录第 502—508 行</p></details>
+</section>
+<section class="case" id="case-30" aria-labelledby="title-30" hidden>
+  <div class="case-intro"><span class="case-number">CASE 30</span><h2 id="title-30">牛肉为什么忌醋呢</h2><p>生活常识直接解释原因，相关菜式不必强行划出</p></div>
+  <div class="comparison">
+    <article class="answer-panel before"><header class="panel-head"><span><span class="dot old"></span>改前</span><span class="count">1 个划词</span></header><div class="answer"><p><strong>牛肉烹饪时“忌醋”主要是为了防止肉质变硬和影响原味，但并非绝对禁忌，视具体做法而定。</strong> 传统炖煮或卤制牛肉时，加醋可能导致口感变差，但在特定菜式或处理技巧中适量使用反而有益 。</p>
+<h3>肉质容易变硬</h3>
+<p>醋含有醋酸，属于酸性物质。在炖煮或卤制牛肉时，酸性环境会使牛肉中的蛋白质迅速凝固收缩，导致肉质纤维收紧，吃起来口感发柴、变硬，不易嚼烂，尤其是对于追求软烂口感的传统做法，加醋往往得不偿失 。</p>
+<h3>鲜味容易被盖</h3>
+<p>牛肉本身具有独特的鲜美风味，尤其是清炖或卤制时，讲究的是肉香浓郁。醋的酸味具有较强的挥发性和掩盖性，加入后容易中和或掩盖牛肉原本的鲜香味，使成菜味道变得怪异，影响整体风味体验 。</p>
+<h3>哪些情况能放</h3>
+<p>“忌醋”并非绝对规则。若希望牛肉更嫩，少量白醋可激活蛋白酶加速胶原蛋白分解，提升嫩度；制作酸甜口味（如<button class="term" type="button" data-search="糖醋牛肉" data-side="改前" aria-label="糖醋牛肉，查看搜索词" title="搜索：糖醋牛肉">糖醋牛肉</button>）或西餐腌制时，醋则是关键调料，能去腥增香并延长保存期 。此外，肠胃功能较弱者大量同食可能增加消化负担，需适量 。</p>
+</div></article>
+    <article class="answer-panel after"><header class="panel-head"><span><span class="dot new"></span>改后</span><span class="count">0 个划词</span></header><div class="answer"><p>牛肉忌醋并不是绝对规则。不同做法中，醋可能影响味道和口感；如果腌制、炖煮或调味需要，少量使用并不一定有问题。</p>
+<p>本题属于饮食常识解释，不需要额外划词。</p>
+</div></article>
+  </div>
+  <section class="changes" aria-labelledby="changes-30"><h3 id="changes-30">这次改了什么</h3><ul>
+<li>先说明不是绝对规则，避免把民间说法写成硬性禁忌。</li>
+<li>保留影响口感和做法的解释，直接回答用户为什么会有这种说法。</li>
+<li>不把糖醋牛肉等菜名当成必须搜索的延伸。</li>
+</ul>
+</section>
+  <details class="planning"><summary>查看划词与搜索词 <span>0 个</span></summary><div class="planning-body"><p>不划词。当前问题已经完整回答，没有需要额外规划的搜索词。</p>
+</div></details>
+  <details class="source"><summary>案例来源</summary><p>近线划词_memory2.0_0914.xlsx</p><p>工作表1 · 问题 B548 · 原正文 F548 · 实体记录第 548—548 行</p></details>
+</section><p class="footnote">依据新标准 V2.1 · 2026年10月19日<br>改前保留表内已有正文与划词，仅统一显示格式。改后为示范改写；表内事实与搜索效果未在本轮重新核验。</p></main>
+</div>
+<dialog class="search-dialog" id="searchDialog" aria-labelledby="dialogWord"><div class="dialog-head"><span id="dialogSide">划词搜索</span><button class="close" id="closeDialog" type="button" aria-label="关闭">×</button></div><h2 class="dialog-word" id="dialogWord"></h2><p class="search-label">点击后搜索</p><p class="search-query" id="dialogQuery"></p><button class="copy" type="button" id="copyQuery">复制搜索词</button><p class="dialog-footer">此处展示搜索词，不展示实际搜索结果。</p></dialog>
+<div class="toast" id="toast" role="status" hidden>已复制搜索词</div>
+<script>
+const cases = Array.from(document.querySelectorAll('.case'));
+const navs = Array.from(document.querySelectorAll('.case-nav'));
+const progress = document.getElementById('progress');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const dialog = document.getElementById('searchDialog');
+let active = 0;
+function selectCase(index, shouldScroll = true) {
+  if (index < 0 || index >= cases.length) return;
+  active = index;
+  cases.forEach((c,i) => { c.hidden = i !== index; c.classList.toggle('active',i===index); });
+  navs.forEach((b,i) => { b.classList.toggle('active',i===index); b.setAttribute('aria-current', String(i===index)); });
+  progress.textContent = String(index+1).padStart(2,'0')+' / 30';
+  prev.disabled = index===0; next.disabled = index===cases.length-1;
+  history.replaceState(null,'','#case-'+String(index+1).padStart(2,'0'));
+  if (shouldScroll) {
+    const top = document.getElementById('main').getBoundingClientRect().top + window.scrollY - 20;
+    window.scrollTo({top:Math.max(0,top),behavior:'auto'});
+    if (window.innerWidth <= 850) navs[index].scrollIntoView({block:'nearest',inline:'nearest'});
+  }
+}
+navs.forEach((b,i) => b.addEventListener('click',() => selectCase(i)));
+prev.addEventListener('click',() => selectCase(active-1));
+next.addEventListener('click',() => selectCase(active+1));
+document.getElementById('showTerms').addEventListener('change',e => document.body.classList.toggle('hide-terms',!e.target.checked));
+document.addEventListener('click',e => {
+  const term = e.target.closest('.term');
+  if (!term) return;
+  document.querySelectorAll('.term.selected').forEach(t => t.classList.remove('selected'));
+  term.classList.add('selected');
+  document.getElementById('dialogWord').textContent = term.textContent;
+  document.getElementById('dialogQuery').textContent = term.dataset.search;
+  document.getElementById('dialogSide').textContent = term.dataset.side+' · 划词搜索';
+  document.getElementById('copyQuery').textContent = '复制搜索词';
+  dialog.showModal();
+});
+document.getElementById('closeDialog').addEventListener('click',() => dialog.close());
+dialog.addEventListener('click',e => { if (e.target === dialog) { const r=dialog.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) dialog.close(); }});
+dialog.addEventListener('close',() => document.querySelectorAll('.term.selected').forEach(t => t.classList.remove('selected')));
+document.getElementById('copyQuery').addEventListener('click',async () => {
+  const text = document.getElementById('dialogQuery').textContent;
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+    else {
+      const textarea = document.createElement('textarea'); textarea.value=text; textarea.style.position='fixed';textarea.style.opacity='0';dialog.appendChild(textarea);textarea.select();const success=document.execCommand('copy');textarea.remove();if(!success) throw new Error('copy failed');
+    }
+    document.getElementById('copyQuery').textContent = '已复制';
+    const toast=document.getElementById('toast'); toast.hidden=false;setTimeout(() => toast.hidden=true,1800);
+  } catch { document.getElementById('copyQuery').textContent='请选中上方搜索词复制'; }
+});
+document.addEventListener('keydown',e => {
+  if (dialog.open || e.target.matches('input,textarea,select,summary,button') || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key==='ArrowRight') selectCase(active+1);
+  if (e.key==='ArrowLeft') selectCase(active-1);
+});
+const initial = location.hash.match(/^#case-(d{2})$/);
+selectCase(initial ? Number(initial[1])-1 : 0,false);
+</script>
+</body>
+</html>
